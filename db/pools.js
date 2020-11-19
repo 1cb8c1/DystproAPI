@@ -24,15 +24,14 @@ const getPool = (name) => {
   }
 };
 
-module.exports = {
-  closePool,
-  createPool,
-  getPool,
-  P_OWNER,
-};
-
 //Populating pools
-createPool(process.env.SQLAZURECONNSTR_DYSTPROOWNER, P_OWNER);
+const populatePoolsPromise = new Promise(async (resolve, reject) => {
+  //Checks if object is empty
+  if (Object.keys(POOLS).length === 0 && POOLS.constructor === Object) {
+    await createPool(process.env.SQLAZURECONNSTR_DYSTPROOWNER, P_OWNER);
+  }
+  resolve();
+});
 
 const cleanUp = () => {
   console.log("Closing pools");
@@ -54,3 +53,11 @@ process.on("SIGINT", () => {
   console.log("\nCaught SIGINT");
   process.exit();
 });
+
+module.exports = {
+  closePool,
+  createPool,
+  getPool,
+  populatePoolsPromise,
+  P_OWNER,
+};
