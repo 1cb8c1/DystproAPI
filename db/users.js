@@ -23,7 +23,16 @@ const createUser = async (email, plainPassword) => {
   await request.query("EXEC dbo.create_user @email, @hashed");
 };
 
+const getUser = async (email) => {
+  const pool = getPool(P_OWNER);
+  const request = pool.request();
+  request.input("email", sql.VarChar(64), email);
+  const result = await request.query("SELECT * FROM get_user(@email)");
+  return result.recordset[0];
+};
+
 module.exports = {
   userExists,
   createUser,
+  getUser,
 };
