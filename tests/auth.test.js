@@ -185,6 +185,25 @@ describe("Admin access test", () => {
 
     done();
   });
+
+  it("should fail accessing with admin permissions", async (done) => {
+    //Login
+    const app = await getApp();
+    const res = await request(app).post("/auth/login").send({
+      email: "0.0028@email.com",
+      password: `123456`,
+    });
+    expect(res.statusCode).toBe(200);
+    const token = res.body.token;
+
+    const res2 = await request(app)
+      .get("/")
+      .send({})
+      .set({ "x-access-token": token });
+    expect(res2.statusCode).toBe(403);
+
+    done();
+  });
 });
 
 //Fix closing down during tests!
