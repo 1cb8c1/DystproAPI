@@ -31,8 +31,20 @@ const getUser = async (email) => {
   return result.recordset[0];
 };
 
+const userAuthorized = async (email, role) => {
+  const pool = getPool(P_OWNER);
+  const request = pool.request();
+  request.input("email", sql.VarChar(64), email);
+  request.input("role", sql.VarChar(32), role);
+  const result = await request.query(
+    "SELECT dbo.user_authorized(@email, @role) AS authorized"
+  );
+  return result.recordset[0].authorized;
+};
+
 module.exports = {
   userExists,
   createUser,
   getUser,
+  userAuthorized,
 };

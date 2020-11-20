@@ -3,18 +3,15 @@ const jwt = require("jsonwebtoken");
 const { userExists, createUser, getUser } = require("../db/users");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcryptjs");
-const { verifyToken } = require("./VerifyToken");
+const { verifyToken, generateToken } = require("./Token");
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-const SECRET = process.env.SECRET;
 
 router.post("/register", async (req, res) => {
   try {
     await createUser(req.body.email, req.body.password);
-    const token = jwt.sign({ email: req.body.email }, SECRET, {
-      expiresIn: 86400,
-    });
+    const token = generateToken(req.body.email);
     res.status(200).send({ auth: true, token: token });
   } catch (error) {
     res.status(500).send(error);
@@ -59,9 +56,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).send({ auth: false, token: null });
     }
 
-    const token = jwt.sign({ email: user.email }, process.env.SECRET, {
-      expiresIn: 86400,
-    });
+    const token = generateToken(user.email);
     res.status(200).send({ auth: true, token: token });
   } catch (error) {
     return res.status(500).send(error);
