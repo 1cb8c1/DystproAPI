@@ -73,7 +73,7 @@ Responses:
 <pre>
 {
     error: {
-    code: CODES.BADARGUMENT,
+    code: "BADARGUMENT",
     message: "Missing one of arguments needed for registration",
     },
     auth: false,
