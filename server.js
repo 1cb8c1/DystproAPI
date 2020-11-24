@@ -5,6 +5,7 @@ const authController = require("./auth/AuthenticationController");
 const { verifyToken } = require("./auth/Token");
 const { checkAuthorization } = require("./auth/Authorization");
 const { ROLES } = require("./auth/Roles");
+const productsController = require("./products/ProductsController");
 
 const listenHandler = app.listen(process.env.PORT, () => {
   console.log(`Listening on port ${process.env.PORT}...`);
@@ -20,6 +21,7 @@ app.get(
 );
 
 app.use("/auth", authController);
+app.use("/products", productsController);
 
 const getApp = async () => {
   await populatePoolsPromise;
@@ -30,3 +32,9 @@ module.exports = {
   getApp,
   listenHandler,
 };
+
+const cleanUp = () => {
+  listenHandler.close();
+};
+
+process.on("exit", cleanUp);
