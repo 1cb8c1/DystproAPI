@@ -53,6 +53,7 @@ Responses:
 <tr>
 <th> HTTP Code </th>
 <th> Body </th>
+<th> Description </th>
 </tr>
 </thead>
 <tbody>
@@ -66,6 +67,9 @@ Responses:
     token: token 
 }</pre>
 </td>
+<td>
+Successful registration
+</td>
 </tr>
 <tr>
 <td>400</td>
@@ -74,11 +78,14 @@ Responses:
 {
     error: {
     code: "BADARGUMENT",
-    message: "Missing one of arguments needed for registration",
+    message: "Missing one of the arguments needed for registration",
     },
     auth: false,
     token: null,
 }</pre>
+</td>
+<td>
+One of the arguments is missing
 </td>
 </tr>
 <tr>
@@ -90,16 +97,19 @@ Responses:
     code: "BADARGUMENT",
     message: "Password isn't strong enough",
     details: {
-        longEnough: longEnough,
-        hasSmallLetter: hasSmallLetter,
-        hasBigLetter: hasBigLetter,
-        hasNumber: hasNumber,
-        hasSpecialCharacter: hasSpecialCharacter,
+        longEnough: ...,
+        hasSmallLetter: ...,
+        hasBigLetter: ...,
+        hasNumber: ...,
+        hasSpecialCharacter: ...,
     },
     },
     auth: false,
     token: null,
 }</pre>
+</td>
+<td>
+Values from details will be bollean
 </td>
 </tr>
 </tbody>

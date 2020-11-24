@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
     return res.status(400).send({
       error: {
         code: CODES.BADARGUMENT,
-        message: "Missing one of arguments needed for registration",
+        message: "Missing one of the arguments needed for registration",
       },
       auth: false,
       token: null,
