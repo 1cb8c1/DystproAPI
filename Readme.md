@@ -3,7 +3,7 @@
 ## Overview
 
 This project is used as REST API for distproapp.
-All API acces is over HTTPS and can be accesed from [dystproapi.azurewebsites.net](dystproapi.azurewebsites.net)
+All API access is over HTTPS and can be accesed from [dystproapi.azurewebsites.net](dystproapi.azurewebsites.net)
 
 All data is sent and receives as JSON expect one example (because of project specification to use at least one XML endpoint)
 
