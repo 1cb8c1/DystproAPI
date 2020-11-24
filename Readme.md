@@ -218,7 +218,8 @@ Responses:
 <td>
 <pre>
 { 
-    auth: true, token: ... 
+    auth: true, 
+    token: ... 
 }</pre>
 </td>
 <td>
