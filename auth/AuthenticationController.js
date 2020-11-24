@@ -57,7 +57,7 @@ router.post("/register", async (req, res) => {
     return res.status(500).send({
       error: {
         code: CODES.DATABASE,
-        message: "Databse returned error",
+        message: "Database returned error",
         innererror: innererror,
       },
       auth: false,
@@ -70,19 +70,37 @@ router.get("/me", verifyToken, async (req, res) => {
   try {
     const doesUserExists = await userExists(req.email);
     if (!doesUserExists) {
-      throw new Error(`Email:${req.email} doesn't exist`);
+      return res.status(422).send({
+        error: {
+          code: CODES.BADARGUMENT,
+          message: "Such email doesn't exist, did you use correct token?",
+        },
+        user: null,
+      });
     }
 
     const user = await getUser(req.email);
 
     if (user === undefined) {
-      throw new Error(`User:${user} doesn't exist, but should. Strange...`);
+      return res.status(500).send({
+        error: {
+          code: CODES.LOGIC,
+          message: "For some reason email couldn't have been retrived",
+        },
+        user: null,
+      });
     }
 
     delete user.password;
-    return res.status(200).send(user);
+    return res.status(200).send({ user: user });
   } catch (error) {
-    return res.status(500).send({ auth: false, message: error });
+    return res.status(500).send({
+      error: {
+        code: CODES.DATABASE,
+        message: "Database returned error",
+      },
+      user: null,
+    });
   }
 });
 
@@ -90,7 +108,14 @@ router.post("/login", async (req, res) => {
   const doesUserExists = await userExists(req.body.email);
   try {
     if (!doesUserExists) {
-      return res.status(404).send("Email doesn't exist");
+      return res.status(422).send({
+        error: {
+          code: CODES.BADARGUMENT,
+          message: "User doesn't exist",
+        },
+        auth: false,
+        token: null,
+      });
     }
 
     const user = await getUser(req.body.email);
@@ -101,13 +126,28 @@ router.post("/login", async (req, res) => {
       user.password
     );
     if (!isPasswordValid) {
-      return res.status(401).send({ auth: false, token: null });
+      return res.status(422).send({
+        error: {
+          code: CODES.BADARGUMENT,
+          message: "Wrong password",
+        },
+        auth: false,
+        token: null,
+      });
     }
 
     const token = generateToken(user.email);
     res.status(200).send({ auth: true, token: token });
-  } catch (error) {
-    return res.status(500).send(error);
+  } catch (innererror) {
+    return res.status(500).send({
+      error: {
+        code: CODES.DATABASE,
+        message: "Database returned error",
+        innererror: innererror,
+      },
+      auth: false,
+      token: null,
+    });
   }
 });
 

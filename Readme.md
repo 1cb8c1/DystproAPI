@@ -114,3 +114,116 @@ Values from details will be bollean
 </tr>
 </tbody>
 </table>
+
+<br/><br/>
+
+### User info
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>GET</td>
+        <td>/auth/me</td>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+User get's information about him.
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body </th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+    user: { 
+        email: ...
+    }
+}</pre>
+</td>
+<td>
+Successful reguest
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Login
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>POST</td>
+        <td>/auth/login</td>
+        <td>
+            <pre>
+{ 
+    email: "example@examplemail.com",
+    password: "examplePassword!1" 
+}</pre>
+        </td>
+    </tbody>
+</table>
+User get's token used for authentication.
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body </th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{ 
+    auth: true, token: token 
+}</pre>
+</td>
+<td>
+Successful login
+</td>
+</tr>
+</tbody>
+</table>
