@@ -64,7 +64,7 @@ Responses:
 <pre>
 { 
     auth: true, 
-    token: token 
+    token: ... 
 }</pre>
 </td>
 <td>
