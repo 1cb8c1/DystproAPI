@@ -5,7 +5,7 @@
 This project is used as REST API for distproapp.
 All API access is over HTTPS and can be accesed from [dystproapi.azurewebsites.net](dystproapi.azurewebsites.net)
 
-All data is sent and receives as JSON expect one example (because of project specification to use at least one XML endpoint)
+All data is sent and received as JSON expect one example (because of project specification to use at least one XML endpoint)
 
 <br/><br/>
 
@@ -77,8 +77,8 @@ Successful registration
 <pre>
 {
     error: {
-    code: "BADARGUMENT",
-    message: "Missing one of the arguments needed for registration",
+        code: "BADARGUMENT",
+        message: "Missing one of the arguments needed for registration",
     },
     auth: false,
     token: null,
@@ -94,14 +94,14 @@ One of the arguments is missing
 <pre>
 {
     error: {
-    code: "BADARGUMENT",
-    message: "Password isn't strong enough",
-    details: {
-        longEnough: ...,
-        hasSmallLetter: ...,
-        hasBigLetter: ...,
-        hasNumber: ...,
-        hasSpecialCharacter: ...,
+        code: "BADARGUMENT",
+        message: "Password isn't strong enough",
+        details: {
+            longEnough: ...,
+            hasSmallLetter: ...,
+            hasBigLetter: ...,
+            hasNumber: ...,
+            hasSpecialCharacter: ...,
     },
     },
     auth: false,
@@ -125,21 +125,23 @@ Values from details will be bollean
         <tr>
             <th> Method </th>
             <th> Route </th>
+            <th> Body </th>
             <th> Headers </th>
         </tr>
     </thead>
     <tbody>
         <td>GET</td>
         <td>/auth/me</td>
-        <td>
-            <pre>
+        <td></td>
+        <td><pre>
 { 
     "x-access-token": token 
-}</pre>
-        </td>
+}</pre></td>
     </tbody>
 </table>
 User get's information about him.
+Header <b>x-access-token</b> is required.
+See authentication sub-chapter for more details.
 
 <br/><br/>
 
@@ -228,3 +230,221 @@ Successful login
 </tr>
 </tbody>
 </table>
+
+<br/><br/>
+
+### Authentication
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+In order to access some endpoints, header <b>x-access-token</b> is required. Token can be retrived by login.
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body </th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>401</td>
+<td>
+<pre>
+{
+    error: {
+        code: "BADARGUMENT",
+        message: "No token provided.",
+    },
+    auth: false,
+}</pre>
+</td>
+<td>
+No header with token was provided.
+</td>
+</tr>
+<tr>
+<td>401</td>
+<td>
+<pre>
+{
+    error: {
+        code: "BADARGUMENT",
+        message: "Failed to verify token.",
+    },
+    auth: false,
+}</pre>
+</td>
+<td>
+Token wasn't correct.
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Authorization
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+In order to access some endpoints, header <b>x-access-token</b> is required. Token can be retrived by login.
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body </th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>422</td>
+<td>
+<pre>
+{
+    error: {
+        code: "BADARGUMENT",
+        message: "Authorization problem. Email doesn't exist",
+    },
+}</pre>
+</td>
+<td>
+For some reason, email doesn't exist in database. This shouldn't happen. Contact developers if encountered.
+</td>
+</tr>
+<tr>
+<td>401</td>
+<td>
+<pre>
+{
+    error: {
+        code: "NOTAUTHORIZED",
+        message: "User not authorized",
+    },
+}</pre>
+</td>
+<td>
+User doesn't have permissions to access this resourse.
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+---
+
+## Products
+
+In order to use products endpoints - route `/products` is used. So url will be: dystproapi.azurewebsites.net/products/
+
+<br/><br/>
+
+### Products names
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/products/names</td>
+        <td>
+            <pre>
+{
+    name: "product_name_you_are_searching_for"
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body </th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{ 
+    products: [
+        {
+            product_id: ...,
+            name: ...
+        },
+        {
+            product_id: ...,
+            name: ...
+        },
+        ...
+    ]
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+<style>
+table {
+    width: 100%
+}
+</style>
