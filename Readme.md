@@ -442,9 +442,3 @@ Successful request
 </table>
 
 <br/><br/>
-
-<style>
-table {
-    width: 100%
-}
-</style>
