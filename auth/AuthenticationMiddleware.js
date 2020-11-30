@@ -19,10 +19,12 @@ const verifyTokenMiddleware = async (req, res, next) => {
   //TODO: what if user doesn't exist
   const user = await getUserByID(decoded.user_id);
 
-  //CHECK ALGORITHM!!! MIGHT BE A VULNEBIRITY
+  //ALGORITHM MUST BE SPECIFIED! Otherwise it's vulnerability
+  //If token's alg is different, error is thrown.
   jwt.verify(
     token,
     CONFIG.SECRET + user.password_creation.date,
+    { algorithms: ["HS256"] },
     (err, decoded) => {
       if (err) {
         return res.status(401).send({
