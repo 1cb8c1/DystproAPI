@@ -2,8 +2,10 @@ const express = require("express");
 const { populatePoolsPromise } = require("./db/pools");
 const app = express();
 const authController = require("./auth/AuthenticationController");
-const { verifyToken } = require("./auth/Token");
-const { checkAuthorization } = require("./auth/AuthorizationMiddleware");
+const { verifyTokenMiddleware } = require("./auth/Token");
+const {
+  checkAuthorizationMiddleware,
+} = require("./auth/AuthorizationMiddleware");
 const { ROLES } = require("./auth/Roles");
 const productsController = require("./products/ProductsController");
 
@@ -14,7 +16,7 @@ const listenHandler = app.listen(process.env.PORT, () => {
 //Could add middleware to specific route!
 app.get(
   "/",
-  [verifyToken, checkAuthorization(ROLES.ADMIN)],
+  [verifyTokenMiddleware, checkAuthorizationMiddleware(ROLES.ADMIN)],
   async (req, res) => {
     res.status(200).send("hello!");
   }

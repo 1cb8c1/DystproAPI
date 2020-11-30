@@ -1,36 +1,4 @@
 const jwt = require("jsonwebtoken");
-const SECRET = process.env.SECRET;
-const { CODES } = require("../errors/Errors");
-
-//CHANGE SECRET TO SECRET + USER_PASSWORD
-
-const verifyToken = (req, res, next) => {
-  const token = req.headers["x-access-token"];
-  if (!token)
-    return res.status(401).send({
-      error: {
-        code: CODES.BADARGUMENT,
-        message: "No token provided.",
-      },
-      auth: false,
-    });
-
-  //CHECK ALGORITHM!!! MIGHT BE A VULNEBIRITY
-  jwt.verify(token, SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({
-        error: {
-          code: CODES.BADARGUMENT,
-          message: "Failed to verify token.",
-        },
-        auth: false,
-      });
-    }
-
-    req.email = decoded.email;
-    next();
-  });
-};
 
 const generateToken = (email) => {
   return jwt.sign({ email: email }, process.env.SECRET, {
@@ -39,6 +7,5 @@ const generateToken = (email) => {
 };
 
 module.exports = {
-  verifyToken,
   generateToken,
 };
