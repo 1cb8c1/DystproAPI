@@ -55,11 +55,11 @@ router.post("/register", async (req, res) => {
     const token = generateToken(req.body.email);
     return res.status(200).send({ auth: true, token: token });
   } catch (innererror) {
+    console.log(innererror);
     return res.status(500).send({
       error: {
         code: CODES.DATABASE,
         message: "Database returned error",
-        innererror: innererror,
       },
       auth: false,
       token: null,
@@ -138,11 +138,11 @@ router.post("/login", async (req, res) => {
     const token = generateToken(user.email);
     res.status(200).send({ auth: true, token: token });
   } catch (innererror) {
+    console.log(innererror);
     return res.status(500).send({
       error: {
         code: CODES.DATABASE,
         message: "Database returned error",
-        innererror: innererror,
       },
       auth: false,
       token: null,
