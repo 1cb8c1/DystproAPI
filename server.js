@@ -3,7 +3,7 @@ const { populatePoolsPromise } = require("./db/pools");
 const app = express();
 const authController = require("./auth/AuthenticationController");
 const { verifyToken } = require("./auth/Token");
-const { checkAuthorization } = require("./auth/Authorization");
+const { checkAuthorization } = require("./auth/AuthorizationMiddleware");
 const { ROLES } = require("./auth/Roles");
 const productsController = require("./products/ProductsController");
 

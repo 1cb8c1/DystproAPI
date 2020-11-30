@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const SECRET = process.env.SECRET;
 const { CODES } = require("../errors/Errors");
 
+//CHANGE SECRET TO SECRET + USER_PASSWORD
+
 const verifyToken = (req, res, next) => {
   const token = req.headers["x-access-token"];
   if (!token)
@@ -13,6 +15,7 @@ const verifyToken = (req, res, next) => {
       auth: false,
     });
 
+  //CHECK ALGORITHM!!! MIGHT BE A VULNEBIRITY
   jwt.verify(token, SECRET, (err, decoded) => {
     if (err) {
       return res.status(401).send({
