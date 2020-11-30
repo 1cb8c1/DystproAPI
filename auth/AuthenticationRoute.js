@@ -1,13 +1,19 @@
 const express = require("express");
-const { userExists, createUser, getUser } = require("../db/users");
+const {
+  userExists,
+  emailExists,
+  createUser,
+  getUserByEmail,
+  getUserByID,
+} = require("../db/users");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcryptjs");
-const { verifyToken, generateToken } = require("./Token");
+const { generateToken } = require("./Token");
+const { verifyTokenMiddleware } = require("./AuthenticationMiddleware");
 const { CODES } = require("../errors/Errors");
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-const { isPasswordValid } = require("../auth/Password");
+const { isPasswordValid } = require("./Password");
 
 router.post("/register", async (req, res) => {
   if (req.body.email === undefined || req.body.password === undefined) {
@@ -52,7 +58,9 @@ router.post("/register", async (req, res) => {
 
   try {
     await createUser(req.body.email, req.body.password);
-    const token = generateToken(req.body.email);
+    const user = await getUserByEmail(req.body.email);
+    //Add try catch here
+    const token = generateToken(user);
     return res.status(200).send({ auth: true, token: token });
   } catch (innererror) {
     console.log(innererror);
@@ -67,7 +75,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/me", verifyToken, async (req, res) => {
+router.get("/me", verifyTokenMiddleware, async (req, res) => {
   try {
     const doesUserExists = await userExists(req.email);
     if (!doesUserExists) {
@@ -80,7 +88,7 @@ router.get("/me", verifyToken, async (req, res) => {
       });
     }
 
-    const user = await getUser(req.email);
+    const user = await getUserByEmail(req.email);
 
     if (user === undefined) {
       return res.status(500).send({
@@ -106,9 +114,9 @@ router.get("/me", verifyToken, async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const doesUserExists = await userExists(req.body.email);
+  const doesEmailExist = await emailExists(req.body.email);
   try {
-    if (!doesUserExists) {
+    if (!doesEmailExist) {
       return res.status(422).send({
         error: {
           code: CODES.BADARGUMENT,
@@ -119,7 +127,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const user = await getUser(req.body.email);
+    const user = await getUserByEmail(req.body.email);
     //add if here
 
     const passwordValid = isPasswordValid(req.body.password, user);
@@ -135,7 +143,7 @@ router.post("/login", async (req, res) => {
       });
     }
 
-    const token = generateToken(user.email);
+    const token = generateToken(user);
     res.status(200).send({ auth: true, token: token });
   } catch (innererror) {
     console.log(innererror);
@@ -156,6 +164,6 @@ router.get("/logout", (req, res) => {
 
 router.post("/resetPassword", (req, res) => {});
 
-router.post("/changePassword", verifyToken, (req, res) => {});
+router.post("/changePassword", verifyTokenMiddleware, (req, res) => {});
 
 module.exports = router;

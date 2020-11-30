@@ -1,9 +1,9 @@
 const bcrypt = require("bcryptjs");
-const SALT = 12;
+const SALT_ROUNDS = 14;
 
 /*HASH IS 60 characters long*/
 const generateHashedPassword = (plainPassword) => {
-  return bcrypt.hashSync(plainPassword, SALT);
+  return bcrypt.hashSync(plainPassword, SALT_ROUNDS);
 };
 
 const isPasswordValid = (plainPassword, user) => {

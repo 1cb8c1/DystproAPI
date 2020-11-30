@@ -1,15 +1,10 @@
-const {
-  userExists,
-  createUser,
-  getUser,
-  userAuthorized,
-} = require("../db/users");
+const { userExists, userAuthorized } = require("../db/users");
 const { CODES } = require("../errors/Errors");
 
 const checkAuthorizationMiddleware = (role) => {
   return async (req, res, next) => {
-    const email = req.email;
-    const doesUserExist = await userExists(email);
+    const user = req.user;
+    const doesUserExist = await userExists(user.id);
 
     if (!doesUserExist) {
       return res.status(422).send({
@@ -20,7 +15,7 @@ const checkAuthorizationMiddleware = (role) => {
       });
     }
 
-    const isAuthorized = await userAuthorized(email, role);
+    const isAuthorized = await userAuthorized(user.id, role);
     if (!isAuthorized) {
       return res.status(403).send({
         error: {

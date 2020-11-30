@@ -1,36 +1,74 @@
 jest.setTimeout(10000);
 const { getApp, listenHandler } = require("../server");
+const sql = require("mssql");
 const {
   userExists,
   createUser,
-  getUser,
+  getUserByEmail,
+  getUserByID,
   userAuthorized,
+  emailExists,
 } = require("../db/users");
 
-describe("DB user functions", () => {
-  it("getUser should succeed", async (done) => {
-    const app = await getApp();
-    const result = await getUser("baba@piaskowa.pl");
+describe("DB get user functions", () => {
+  it("getUserById should succeed", async (done) => {
+    await getApp();
+    const result = await getUserByID("1");
     const expected = {
+      distributor: null,
       email: "baba@piaskowa.pl",
-      password: "111mojehaslo",
+      password: "$2a$14$hB8NZ3Nu0lhZGXoRPXmGDeg3O2KGtv/L2KYfWo70OssgQNkbY7kNe",
+      password_creation_date: new Date("2020-11-30T20:15:21.377Z"),
+      user_id: 1,
     };
-    expect(result.email).toBe(expected.email);
-    expect(result.password).toBe(result.password);
+    expect(result).toStrictEqual(expected);
+    done();
+  });
+  it("getUserByEmail should succeed", async (done) => {
+    await getApp();
+    const result = await getUserByEmail("baba@piaskowa.pl");
+    const expected = {
+      distributor: null,
+      email: "baba@piaskowa.pl",
+      password: "$2a$14$hB8NZ3Nu0lhZGXoRPXmGDeg3O2KGtv/L2KYfWo70OssgQNkbY7kNe",
+      password_creation_date: new Date("2020-11-30T20:15:21.377Z"),
+      user_id: 1,
+    };
+    expect(result).toStrictEqual(expected);
+    done();
+  });
+});
+
+describe("DB exists functions for user", () => {
+  it("user should exist", async (done) => {
+    await getApp();
+    const result = await userExists(1);
+    const expected = true;
+    expect(result).toBe(expected);
     done();
   });
 
-  it("userAuthorized should succeed", async (done) => {
-    const app = await getApp();
-    const result = await userAuthorized("0.0017@email.com", "ADMIN");
-    expect(result).toBe(true);
+  it("user shouldn't exist", async (done) => {
+    await getApp();
+    const result = await userExists(1000);
+    const expected = false;
+    expect(result).toBe(expected);
     done();
   });
 
-  it("userAuthorized should succeed", async (done) => {
-    const app = await getApp();
-    const result = await userAuthorized("0.0028@email.com", "ADMIN");
-    expect(result).toBe(false);
+  it("email should exist", async (done) => {
+    await getApp();
+    const result = await emailExists("baba@piaskowa.pl");
+    const expected = true;
+    expect(result).toBe(expected);
+    done();
+  });
+
+  it("email shouldn't exist", async (done) => {
+    await getApp();
+    const result = await emailExists("baba..............piaskowa.pl");
+    const expected = false;
+    expect(result).toBe(expected);
     done();
   });
 });

@@ -1,8 +1,9 @@
-const SECRET = process.env.SECRET;
+const CONFIG = require("../Config");
 const { CODES } = require("../errors/Errors");
 const jwt = require("jsonwebtoken");
+const { getUserByID } = require("../db/users");
 
-const verifyTokenMiddleware = (req, res, next) => {
+const verifyTokenMiddleware = async (req, res, next) => {
   const token = req.headers["x-access-token"];
   if (!token)
     return res.status(401).send({
@@ -13,21 +14,30 @@ const verifyTokenMiddleware = (req, res, next) => {
       auth: false,
     });
 
-  //CHECK ALGORITHM!!! MIGHT BE A VULNEBIRITY
-  jwt.verify(token, SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({
-        error: {
-          code: CODES.BADARGUMENT,
-          message: "Failed to verify token.",
-        },
-        auth: false,
-      });
-    }
+  const decoded = jwt.decode(token);
 
-    req.email = decoded.email;
-    next();
-  });
+  //TODO: what if user doesn't exist
+  const user = await getUserByID(decoded.user_id);
+
+  //CHECK ALGORITHM!!! MIGHT BE A VULNEBIRITY
+  jwt.verify(
+    token,
+    CONFIG.SECRET + user.password_creation.date,
+    (err, decoded) => {
+      if (err) {
+        return res.status(401).send({
+          error: {
+            code: CODES.BADARGUMENT,
+            message: "Failed to verify token.",
+          },
+          auth: false,
+        });
+      }
+
+      req.user = user;
+      next();
+    }
+  );
 };
 
 module.exports = {

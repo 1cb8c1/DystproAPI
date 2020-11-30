@@ -1,6 +1,7 @@
 const { ConnectionPool } = require("mssql");
 const POOLS = {};
 const P_OWNER = "OWNER";
+const CONFIG = require("../Config");
 
 const createPool = (config, name) => {
   if (getPool(name)) {
@@ -28,7 +29,7 @@ const getPool = (name) => {
 const populatePoolsPromise = new Promise(async (resolve, reject) => {
   //Checks if object is empty
   if (Object.keys(POOLS).length === 0 && POOLS.constructor === Object) {
-    await createPool(process.env.SQLAZURECONNSTR_DYSTPROOWNER, P_OWNER);
+    await createPool(CONFIG.SQLAZURECONNSTR_DYSTPROOWNER, P_OWNER);
   }
   resolve();
 });
