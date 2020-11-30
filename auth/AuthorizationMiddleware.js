@@ -6,7 +6,7 @@ const {
 } = require("../db/users");
 const { CODES } = require("../errors/Errors");
 
-const checkAuthorization = (role) => {
+const checkAuthorizationMiddleware = (role) => {
   return async (req, res, next) => {
     const email = req.email;
     const doesUserExist = await userExists(email);
@@ -33,4 +33,4 @@ const checkAuthorization = (role) => {
   };
 };
 
-module.exports = { checkAuthorization };
+module.exports = { checkAuthorizationMiddleware };

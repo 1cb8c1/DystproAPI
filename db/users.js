@@ -1,7 +1,6 @@
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
-const bcrypt = require("bcryptjs");
-const SALT = 8;
+const { generateHashedPassword } = require("../auth/Password");
 
 const userExists = async (email) => {
   const pool = getPool(P_OWNER);
@@ -15,7 +14,7 @@ const userExists = async (email) => {
 
 const createUser = async (email, plainPassword) => {
   /*HASH IS 60 characters long*/
-  const hashedPassword = bcrypt.hashSync(plainPassword, SALT);
+  const hashedPassword = generateHashedPassword(plainPassword);
   const pool = getPool(P_OWNER);
   const request = pool.request();
   request.input("email", sql.VarChar(64), email);
