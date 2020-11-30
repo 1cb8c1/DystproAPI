@@ -7,6 +7,7 @@ const { CODES } = require("../errors/Errors");
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+const { isPasswordValid } = require("../auth/Password");
 
 router.post("/register", async (req, res) => {
   if (req.body.email === undefined || req.body.password === undefined) {
@@ -121,11 +122,9 @@ router.post("/login", async (req, res) => {
     const user = await getUser(req.body.email);
     //add if here
 
-    const isPasswordValid = bcrypt.compareSync(
-      req.body.password,
-      user.password
-    );
-    if (!isPasswordValid) {
+    const passwordValid = isPasswordValid(req.body.password, user);
+
+    if (!passwordValid) {
       return res.status(422).send({
         error: {
           code: CODES.BADARGUMENT,

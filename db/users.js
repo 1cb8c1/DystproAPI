@@ -13,7 +13,6 @@ const userExists = async (email) => {
 };
 
 const createUser = async (email, plainPassword) => {
-  /*HASH IS 60 characters long*/
   const hashedPassword = generateHashedPassword(plainPassword);
   const pool = getPool(P_OWNER);
   const request = pool.request();

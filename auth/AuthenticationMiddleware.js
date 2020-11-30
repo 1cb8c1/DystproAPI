@@ -1,5 +1,6 @@
 const SECRET = process.env.SECRET;
 const { CODES } = require("../errors/Errors");
+const jwt = require("jsonwebtoken");
 
 const verifyTokenMiddleware = (req, res, next) => {
   const token = req.headers["x-access-token"];
