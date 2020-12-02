@@ -73,6 +73,16 @@ describe("DB exists functions for user", () => {
   });
 });
 
+describe("DB should return undefined", () => {
+  it("user should exist", async (done) => {
+    await getApp();
+    const result = await getUserByID(1320001);
+    const expected = undefined;
+    expect(result).toStrictEqual(expected);
+    done();
+  });
+});
+
 //Fix closing down during tests!
 //Not it uses --forceExit
 afterAll(() => {

@@ -74,7 +74,7 @@ describe("Register endpoint", () => {
       .send({});
 
     expect(result2.status).toBe(200);
-    removeUserById(result2.body.user.user_id);
+    await removeUserById(result2.body.user.user_id);
 
     done();
   });

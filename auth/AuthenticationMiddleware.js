@@ -16,8 +16,17 @@ const verifyTokenMiddleware = async (req, res, next) => {
 
   const decoded = jwt.decode(token);
 
-  //TODO: what if user doesn't exist
   const user = await getUserByID(decoded.user_id);
+  //If user doesn't exist. Should It be checked with userExists too?
+  if (user === undefined || user.user_id === undefined) {
+    return res.status(401).send({
+      error: {
+        code: CODES.BADARGUMENT,
+        message: "Failed to verify token.",
+      },
+      auth: false,
+    });
+  }
 
   //ALGORITHM MUST BE SPECIFIED! Otherwise it's vulnerability
   //If token's alg is different, error is thrown.

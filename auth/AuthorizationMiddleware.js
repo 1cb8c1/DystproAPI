@@ -4,16 +4,8 @@ const { CODES } = require("../errors/Errors");
 const checkAuthorizationMiddleware = (role) => {
   return async (req, res, next) => {
     const user = req.user;
-    const doesUserExist = await userExists(user.id);
 
-    if (!doesUserExist) {
-      return res.status(422).send({
-        error: {
-          code: CODES.BADARGUMENT,
-          message: "Authorization problem. Email doesn't exist",
-        },
-      });
-    }
+    //verifyToken checks if user exists. No need to to that here.
 
     const isAuthorized = await userAuthorized(user.id, role);
     if (!isAuthorized) {

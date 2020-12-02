@@ -62,7 +62,7 @@ const removeUserById = async (id) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
   request.input("id", sql.Int, id);
-  const result = await request.query("EXEC dbo.remove_user_procedure @id");
+  await request.query("EXEC dbo.remove_user_procedure @id");
 };
 
 module.exports = {
