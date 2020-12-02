@@ -1,6 +1,6 @@
 jest.setTimeout(10000);
 const request = require("supertest");
-const { getApp, listenHandler } = require("../server");
+const { getApp, listenHandler, shutDown } = require("../server");
 const { getProductsNames } = require("../db/products");
 
 //REGISTER
@@ -22,5 +22,5 @@ describe("Products endpoint", () => {
 //Fix closing down during tests!
 //Not it uses --forceExit
 afterAll(() => {
-  listenHandler.close();
+  shutDown();
 });

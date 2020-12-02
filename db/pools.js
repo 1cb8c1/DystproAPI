@@ -46,19 +46,11 @@ const cleanUp = () => {
   }
 };
 
-//Closing pools on exit
-//Better solution for these bad boys
-process.on("exit", cleanUp);
-
-process.on("SIGINT", () => {
-  console.log("\nCaught SIGINT");
-  process.exit();
-});
-
 module.exports = {
   closePool,
   createPool,
   getPool,
   populatePoolsPromise,
   P_OWNER,
+  cleanUp,
 };

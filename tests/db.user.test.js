@@ -1,5 +1,5 @@
 jest.setTimeout(10000);
-const { getApp, listenHandler } = require("../server");
+const { getApp, listenHandler, shutDown } = require("../server");
 const sql = require("mssql");
 const {
   userExists,
@@ -76,5 +76,5 @@ describe("DB exists functions for user", () => {
 //Fix closing down during tests!
 //Not it uses --forceExit
 afterAll(() => {
-  listenHandler.close();
+  shutDown();
 });

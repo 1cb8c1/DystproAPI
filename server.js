@@ -9,6 +9,10 @@ const {
 const { ROLES } = require("./auth/Roles");
 const productsController = require("./products/ProductsController");
 const CONFIG = require("./Config");
+const helmet = require("helmet");
+const pools = require("./db/pools");
+
+app.use(helmet());
 
 const listenHandler = app.listen(CONFIG.PORT, () => {
   console.log(`Listening on port ${CONFIG.PORT}...`);
@@ -31,13 +35,17 @@ const getApp = async () => {
   return app;
 };
 
+const shutDown = () => {
+  console.log("Shutting down");
+  listenHandler.close(() => {});
+  pools.cleanUp();
+};
+process.on("SIGINT", shutDown);
+process.on("SIGTERM", shutDown);
+process.on("uncaughtException", shutDown);
+
 module.exports = {
   getApp,
   listenHandler,
+  shutDown,
 };
-
-const cleanUp = () => {
-  listenHandler.close();
-};
-
-process.on("exit", cleanUp);

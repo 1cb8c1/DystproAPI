@@ -23,7 +23,7 @@ const verifyTokenMiddleware = async (req, res, next) => {
   //If token's alg is different, error is thrown.
   jwt.verify(
     token,
-    CONFIG.SECRET + user.password_creation.date,
+    CONFIG.SECRET + user.password_creation_date,
     { algorithms: ["HS256"] },
     (err, decoded) => {
       if (err) {

@@ -58,6 +58,13 @@ const userAuthorized = async (email, role) => {
   return result.recordset[0].authorized;
 };
 
+const removeUserById = async (id) => {
+  const pool = getPool(P_OWNER);
+  const request = pool.request();
+  request.input("id", sql.Int, id);
+  const result = await request.query("EXEC dbo.remove_user_procedure @id");
+};
+
 module.exports = {
   userExists,
   emailExists,
@@ -65,4 +72,5 @@ module.exports = {
   getUserByEmail,
   getUserByID,
   userAuthorized,
+  removeUserById,
 };

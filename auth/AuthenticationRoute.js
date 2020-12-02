@@ -27,11 +27,13 @@ router.post("/register", async (req, res) => {
     });
   }
 
+  //TODO check if user already exists
   const longEnough = req.body.password.length >= 8;
-  const hasSmallLetter = req.body.password.match("/[a-z]/g");
-  const hasBigLetter = req.body.password.match("/[A-Z]/g");
-  const hasNumber = req.body.password.match("[0-9]/g");
-  const hasSpecialCharacter = req.body.password.match("/[^a-zA-Zd]/g");
+  const hasSmallLetter = req.body.password.match(/[a-z]/) !== null;
+  const hasBigLetter = req.body.password.match(/[A-Z]/) !== null;
+  const hasNumber = req.body.password.match(/[0-9]/) !== null;
+  const hasSpecialCharacter = req.body.password.match(/[!@#$%^&*]/) !== null;
+
   if (
     !longEnough ||
     !hasSmallLetter ||
@@ -76,41 +78,9 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/me", verifyTokenMiddleware, async (req, res) => {
-  try {
-    const doesUserExists = await userExists(req.email);
-    if (!doesUserExists) {
-      return res.status(422).send({
-        error: {
-          code: CODES.BADARGUMENT,
-          message: "Such email doesn't exist, did you use correct token?",
-        },
-        user: null,
-      });
-    }
-
-    const user = await getUserByEmail(req.email);
-
-    if (user === undefined) {
-      return res.status(500).send({
-        error: {
-          code: CODES.LOGIC,
-          message: "For some reason email couldn't have been retrived",
-        },
-        user: null,
-      });
-    }
-
-    delete user.password;
-    return res.status(200).send({ user: user });
-  } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      user: null,
-    });
-  }
+  const user = req.user;
+  delete user.password;
+  return res.status(200).send({ user: user });
 });
 
 router.post("/login", async (req, res) => {
@@ -120,7 +90,7 @@ router.post("/login", async (req, res) => {
       return res.status(422).send({
         error: {
           code: CODES.BADARGUMENT,
-          message: "User doesn't exist",
+          message: "Wrong email or password",
         },
         auth: false,
         token: null,
@@ -136,7 +106,7 @@ router.post("/login", async (req, res) => {
       return res.status(422).send({
         error: {
           code: CODES.BADARGUMENT,
-          message: "Wrong password",
+          message: "Wrong email or password",
         },
         auth: false,
         token: null,
