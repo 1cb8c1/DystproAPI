@@ -1,11 +1,5 @@
 const express = require("express");
-const {
-  userExists,
-  emailExists,
-  createUser,
-  getUserByEmail,
-  getUserByID,
-} = require("../db/users");
+const { emailExists, createUser, getUserByEmail } = require("../db/users");
 const bodyParser = require("body-parser");
 const { generateToken } = require("./Token");
 const { verifyTokenMiddleware } = require("./AuthenticationMiddleware");
@@ -39,7 +33,6 @@ router.post("/register", async (req, res) => {
     });
   }
 
-  //TODO check if user already exists
   const longEnough = req.body.password.length >= 8;
   const hasSmallLetter = req.body.password.match(/[a-z]/) !== null;
   const hasBigLetter = req.body.password.match(/[A-Z]/) !== null;
