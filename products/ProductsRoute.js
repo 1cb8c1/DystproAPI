@@ -1,8 +1,9 @@
 const { CODES } = require("../errors/Errors");
 const express = require("express");
 const bodyParser = require("body-parser");
-const router = express.Router();
 const { getProductsNames, getProductDetails } = require("../db/products");
+
+const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
