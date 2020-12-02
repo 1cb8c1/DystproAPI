@@ -13,6 +13,26 @@ const getProductsNames = async (orgName) => {
   return result.recordset;
 };
 
+const getProductDetails = async (productId) => {
+  const pool = getPool(P_OWNER);
+  const request = pool.request();
+  request.input("id", sql.Int, productId);
+  const resultProduct = await request.query(
+    "SELECT * FROM dbo.get_product(@id)"
+  );
+  const resultAvailability = await request.query(
+    "SELECT * FROM dbo.get_product_availability(@id)"
+  );
+
+  const product = {
+    ...resultProduct.recordset[0],
+    availability: resultAvailability.recordset,
+  };
+
+  return product;
+};
+
 module.exports = {
   getProductsNames,
+  getProductDetails,
 };
