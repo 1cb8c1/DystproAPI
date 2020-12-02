@@ -7,7 +7,7 @@ const {
   checkAuthorizationMiddleware,
 } = require("./auth/AuthorizationMiddleware");
 const { ROLES } = require("./auth/Roles");
-const productsController = require("./products/ProductsController");
+const productsRoute = require("./products/ProductsRoute");
 const CONFIG = require("./Config");
 const helmet = require("helmet");
 const pools = require("./db/pools");
@@ -28,7 +28,7 @@ app.get(
 );
 
 app.use("/auth", authRoute);
-app.use("/products", productsController);
+app.use("/products", productsRoute);
 
 const getApp = async () => {
   await populatePoolsPromise;
