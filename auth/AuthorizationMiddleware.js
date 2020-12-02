@@ -1,11 +1,11 @@
-const { userExists, userAuthorized } = require("../db/users");
+const { userAuthorized } = require("../db/users");
 const { CODES } = require("../errors/Errors");
 
 const checkAuthorizationMiddleware = (role) => {
   return async (req, res, next) => {
     const user = req.user;
 
-    //verifyToken checks if user exists. No need to to that here.
+    //verifyTokenMiddleware checks if user exists. No need to to that here.
 
     const isAuthorized = await userAuthorized(user.id, role);
     if (!isAuthorized) {

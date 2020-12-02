@@ -27,6 +27,18 @@ router.post("/register", async (req, res) => {
     });
   }
 
+  const emailTaken = await emailExists(req.body.email);
+  if (emailTaken) {
+    return res.status(422).send({
+      error: {
+        code: CODES.BADARGUMENT,
+        message: "Email already taken.",
+      },
+      auth: false,
+      token: null,
+    });
+  }
+
   //TODO check if user already exists
   const longEnough = req.body.password.length >= 8;
   const hasSmallLetter = req.body.password.match(/[a-z]/) !== null;
