@@ -3,6 +3,7 @@ const CODES = {
   DATABASE: "DATABSE",
   LOGIC: "LOGIC",
   NOTAUTHORIZED: "NOTAUTHORIZED",
+  REJECTED: "REJECTED",
 };
 
 module.exports = {

@@ -15,7 +15,7 @@ describe("DB get user functions", () => {
     await getApp();
     const result = await getUserByID("1");
     const expected = {
-      distributor: null,
+      distributor: 1,
       email: "baba@piaskowa.pl",
       password: "$2a$14$hB8NZ3Nu0lhZGXoRPXmGDeg3O2KGtv/L2KYfWo70OssgQNkbY7kNe",
       password_creation_date: new Date("2020-11-30T20:15:21.377Z"),
@@ -28,7 +28,7 @@ describe("DB get user functions", () => {
     await getApp();
     const result = await getUserByEmail("baba@piaskowa.pl");
     const expected = {
-      distributor: null,
+      distributor: 1,
       email: "baba@piaskowa.pl",
       password: "$2a$14$hB8NZ3Nu0lhZGXoRPXmGDeg3O2KGtv/L2KYfWo70OssgQNkbY7kNe",
       password_creation_date: new Date("2020-11-30T20:15:21.377Z"),

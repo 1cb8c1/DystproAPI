@@ -7,7 +7,7 @@ const { getProductsNames } = require("../db/products");
 describe("Products endpoint", () => {
   it("should get list of products", async (done) => {
     const app = await getApp();
-    const res = await request(app).get("/products/names").send({});
+    const res = await request(app).get("/products/").send({});
     const expectedResult = [
       { name: "3445330 Plytki wielkorzebne", product_id: 1 },
       { name: "3445331 Plytki welkobergowe", product_id: 2 },

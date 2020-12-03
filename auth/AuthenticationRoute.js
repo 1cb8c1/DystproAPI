@@ -8,6 +8,9 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 const { isPasswordValid } = require("./Password");
+const DBips = require("../db/ips");
+const ips = require("../secuirty/Ips");
+const { compare } = require("bcryptjs");
 
 router.post("/register", async (req, res) => {
   if (req.body.email === undefined || req.body.password === undefined) {
@@ -89,9 +92,21 @@ router.get("/me", verifyTokenMiddleware, async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+  const banishedIps = await DBips.getBanishedIpsFromLogin();
+  if (banishedIps.includes(ips.removePort(req.ip))) {
+    return res.status(403).send({
+      error: {
+        code: CODES.REJECTED,
+        message: "Too many failed login attempts",
+      },
+      auth: false,
+      token: null,
+    });
+  }
   const doesEmailExist = await emailExists(req.body.email);
   try {
     if (!doesEmailExist) {
+      DBips.insertFailedLogin(req.ip);
       return res.status(422).send({
         error: {
           code: CODES.BADARGUMENT,
@@ -108,6 +123,7 @@ router.post("/login", async (req, res) => {
     const passwordValid = isPasswordValid(req.body.password, user);
 
     if (!passwordValid) {
+      DBips.insertFailedLogin(req.ip);
       return res.status(422).send({
         error: {
           code: CODES.BADARGUMENT,

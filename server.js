@@ -1,6 +1,5 @@
 const express = require("express");
 const { populatePoolsPromise } = require("./db/pools");
-const app = express();
 const authRoute = require("./auth/AuthenticationRoute");
 const { verifyTokenMiddleware } = require("./auth/AuthenticationMiddleware");
 const {
@@ -12,20 +11,20 @@ const CONFIG = require("./Config");
 const helmet = require("helmet");
 const pools = require("./db/pools");
 
+const app = express();
 app.use(helmet());
+app.set("trust proxy", true);
 
 const listenHandler = app.listen(CONFIG.PORT, () => {
   console.log(`Listening on port ${CONFIG.PORT}...`);
 });
 
+const DBips = require("./db/ips");
+
 //Could add middleware to specific route!
-app.get(
-  "/",
-  [verifyTokenMiddleware, checkAuthorizationMiddleware(ROLES.ADMIN)],
-  async (req, res) => {
-    res.status(200).send("hello!");
-  }
-);
+app.get("/", async (req, res) => {
+  res.status(200).send("Hello world!");
+});
 
 app.use("/auth", authRoute);
 app.use("/products", productsRoute);
