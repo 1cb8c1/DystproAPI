@@ -535,7 +535,7 @@ Successful request
 
 ## Drivers
 
-In order to use drivers endpoints - route `/drivers` is used. So url will be: dystproapi.azurewebsites.net/products/
+In order to use drivers endpoints - route `/drivers` is used. So url will be: dystproapi.azurewebsites.net/drivers/
 
 <br/>
 <table>
