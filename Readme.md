@@ -119,6 +119,26 @@ Values from details will be bollean
 
 ### User info
 
+User get's information about him.
+Header <b>x-access-token</b> is required.
+See authentication sub-chapter for more details.
+
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
 <br/>
 <table>
     <thead>
@@ -126,22 +146,14 @@ Values from details will be bollean
             <th> Method </th>
             <th> Route </th>
             <th> Body </th>
-            <th> Headers </th>
         </tr>
     </thead>
     <tbody>
         <td>GET</td>
         <td>/auth/me</td>
         <td></td>
-        <td><pre>
-{ 
-    "x-access-token": token 
-}</pre></td>
     </tbody>
 </table>
-User get's information about him.
-Header <b>x-access-token</b> is required.
-See authentication sub-chapter for more details.
 
 <br/><br/>
 
@@ -337,21 +349,6 @@ Responses:
 </thead>
 <tbody>
 <tr>
-<td>422</td>
-<td>
-<pre>
-{
-    error: {
-        code: "BADARGUMENT",
-        message: "Authorization problem. Email doesn't exist",
-    },
-}</pre>
-</td>
-<td>
-For some reason, email doesn't exist in database. This shouldn't happen. Contact developers if encountered.
-</td>
-</tr>
-<tr>
 <td>401</td>
 <td>
 <pre>
@@ -377,6 +374,23 @@ User doesn't have permissions to access this resourse.
 
 In order to use products endpoints - route `/products` is used. So url will be: dystproapi.azurewebsites.net/products/
 
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
 <br/><br/>
 
 ### Products names
@@ -392,12 +406,9 @@ In order to use products endpoints - route `/products` is used. So url will be: 
     </thead>
     <tbody>
         <td> GET </td>
-        <td>/products/names</td>
+        <td>/products/</td>
         <td>
-            <pre>
-{
-    name: "product_name_you_are_searching_for"
-}</pre>
+            <pre></pre>
         </td>
     </tbody>
 </table>
@@ -410,7 +421,7 @@ Responses:
 <thead>
 <tr>
 <th> HTTP Code </th>
-<th> Body </th>
+<th> Body Example</th>
 <th> Description </th>
 </tr>
 </thead>
@@ -422,17 +433,357 @@ Responses:
 <pre>
 { 
     products: [
-        {
-            product_id: ...,
-            name: ...
+        { 
+            name: "Plytki wielkorzebne czarne", 
+            product_id: 1   
         },
-        {
-            product_id: ...,
-            name: ...
+        { 
+            name: "Plytki wielkorzebne niebieskie", 
+            product_id: 2 
         },
-        ...
+        { 
+            name: "Plytki wielkorzebne szarne", 
+            product_id: 3 
+        },
     ]
 }</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Product details
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/products/:id</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+Example: /products/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+      availability: [
+        {
+          amount: 300,
+          product_warehouse_id: 1,
+          warehouse_name: "Lódz Baluty 1",
+        },
+        {
+          amount: 100,
+          product_warehouse_id: 2,
+          warehouse_name: "Lódz Baluty 2",
+        },
+        {
+          amount: 0,
+          product_warehouse_id: 3,
+          warehouse_name: "Lódz Baluty 3",
+        },
+      ],
+      name: "Plytki wielkorzebne czarne",
+      price: 3000,
+      product_id: 1,
+      unit_name: "m2",
+      unit_number: 300,
+      weight: 1500,</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+<br/><br/>
+
+---
+
+## Drivers
+
+In order to use drivers endpoints - route `/drivers` is used. So url will be: dystproapi.azurewebsites.net/products/
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+### List of drivers
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/drivers/</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{ 
+    drivers: [
+        { 
+            driver_id: 1, 
+            name: "Jacek",
+            surname: "Placek",
+        },
+        {      
+            driver_id: 2, 
+            name: "Anita",
+            surname: "Wagner",
+        }
+    ]
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Add driver
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> POST </td>
+        <td>/drivers/</td>
+        <td>
+<pre>
+{ 
+    driver:
+        { 
+            name: "Jacek",
+            surname: "Placek",
+        },
+}    
+</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{ 
+    driver: 
+        { 
+            driver_id: 1, 
+            name: "Jacek",
+            surname: "Placek",
+        },
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Remove driver
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> DELETE </td>
+        <td>/drivers/:id</td>
+        <td>
+<pre> 
+</pre>
+        </td>
+    </tbody>
+</table>
+Example: /drivers/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Modify driver
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> PATCH </td>
+        <td>/drivers/:id</td>
+        <td>
+<pre> 
+{ 
+    driver: 
+        { 
+            driver_id: 1, 
+            name: "Anya",
+            surname: "Gorye",
+        },
+}
+</pre>
+        </td>
+    </tbody>
+</table>
+If you want to update only name, just don't include surname.
+
+Example: /drivers/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+</pre>
 </td>
 <td>
 Successful request
