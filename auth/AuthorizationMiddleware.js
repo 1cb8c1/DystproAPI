@@ -7,7 +7,7 @@ const checkAuthorizationMiddleware = (role) => {
 
     //verifyTokenMiddleware checks if user exists. No need to to that here.
 
-    const isAuthorized = await userAuthorized(user.id, role);
+    const isAuthorized = await userAuthorized(user.user_id, role);
     if (!isAuthorized) {
       return res.status(403).send({
         error: {

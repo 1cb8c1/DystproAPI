@@ -10,22 +10,27 @@ describe("DB products", () => {
     const expectedResult = {
       availability: [
         {
-          amount: 8000,
+          amount: 300,
           product_warehouse_id: 1,
           warehouse_name: "Lódz Baluty 1",
         },
         {
-          amount: 16000,
+          amount: 100,
           product_warehouse_id: 2,
           warehouse_name: "Lódz Baluty 2",
         },
+        {
+          amount: 0,
+          product_warehouse_id: 3,
+          warehouse_name: "Lódz Baluty 3",
+        },
       ],
-      name: "3445330 Plytki wielkorzebne",
-      price: 10000,
+      name: "Plytki wielkorzebne czarne",
+      price: 3000,
       product_id: 1,
-      unit_name: "szt.",
-      unit_number: 4000,
-      weight: 500,
+      unit_name: "m2",
+      unit_number: 300,
+      weight: 1500,
     };
     expect(res).toStrictEqual(expectedResult);
     done();

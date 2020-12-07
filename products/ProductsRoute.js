@@ -2,10 +2,19 @@ const { CODES } = require("../errors/Errors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const { getProductsNames, getProductDetails } = require("../db/products");
+const {
+  checkAuthorizationMiddleware,
+} = require("../auth/AuthorizationMiddleware");
+const { verifyTokenMiddleware } = require("../auth/AuthenticationMiddleware");
+const { ROLES } = require("../auth/Roles");
 
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
+router.use([
+  verifyTokenMiddleware,
+  checkAuthorizationMiddleware(ROLES.DISTRIBUTOR),
+]);
 
 router.get("/", async (req, res) => {
   try {

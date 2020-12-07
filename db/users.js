@@ -47,13 +47,13 @@ const getUserByID = async (id) => {
   return result.recordset[0];
 };
 
-const userAuthorized = async (email, role) => {
+const userAuthorized = async (id, role) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
-  request.input("email", sql.VarChar(64), email);
+  request.input("id", sql.Int, id);
   request.input("role", sql.VarChar(32), role);
   const result = await request.query(
-    "SELECT dbo.user_authorized(@email, @role) AS authorized"
+    "SELECT dbo.user_authorized(@id, @role) AS authorized"
   );
   return result.recordset[0].authorized;
 };

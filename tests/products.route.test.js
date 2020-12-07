@@ -7,11 +7,19 @@ const { getProductsNames } = require("../db/products");
 describe("Products endpoint", () => {
   it("should get list of products", async (done) => {
     const app = await getApp();
-    const res = await request(app).get("/products/").send({});
+    const result = await request(app).post("/auth/login").send({
+      email: "baba@piaskowa.pl",
+      password: "123abc&&ABC",
+    });
+
+    const res = await request(app)
+      .get("/products/")
+      .set("x-access-token", result.body.token)
+      .send({});
     const expectedResult = [
-      { name: "3445330 Plytki wielkorzebne", product_id: 1 },
-      { name: "3445331 Plytki welkobergowe", product_id: 2 },
-      { name: "3445332 Plytki welkowykladowe", product_id: 3 },
+      { name: "Plytki wielkorzebne czarne", product_id: 1 },
+      { name: "Plytki wielkorzebne niebieskie", product_id: 2 },
+      { name: "Plytki wielkorzebne szarne", product_id: 3 },
     ];
     expect(res.statusCode).toBe(200);
     expect(res.body.products).toStrictEqual(expectedResult);
