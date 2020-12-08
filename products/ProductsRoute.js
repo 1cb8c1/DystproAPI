@@ -1,13 +1,17 @@
-const { CODES } = require("../errors/Errors");
+//IMPORTS
 const express = require("express");
 const bodyParser = require("body-parser");
-const { getProductsNames, getProductDetails } = require("../db/products");
+const DBproducts = require("../db/products");
+const { ROLES } = require("../auth/Roles");
+const { CODES } = require("../errors/Errors");
+
+//IMPORTING MIDDLEWARES
 const {
   checkAuthorizationMiddleware,
 } = require("../auth/AuthorizationMiddleware");
 const { verifyTokenMiddleware } = require("../auth/AuthenticationMiddleware");
-const { ROLES } = require("../auth/Roles");
 
+//SETTING UP ROUTER
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
@@ -16,11 +20,12 @@ router.use([
   checkAuthorizationMiddleware(ROLES.DISTRIBUTOR),
 ]);
 
+//ROUTES
 router.get("/", async (req, res) => {
   try {
-    const products = await getProductsNames(req.body.name);
+    const products = await DBproducts.getProductsNames(req.body.name);
     return res.status(200).send({ products: products });
-  } catch (innererror) {
+  } catch (error) {
     return res.status(500).send({
       error: {
         code: CODES.DATABASE,
@@ -33,9 +38,9 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   try {
-    const product = await getProductDetails(req.params.id);
+    const product = await DBproducts.getProductDetails(req.params.id);
     return res.status(200).send({ product: product });
-  } catch (innerError) {
+  } catch (error) {
     return res.status(500).send({
       error: {
         code: CODES.DATABASE,
@@ -46,4 +51,5 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//EXPORTS
 module.exports = router;
