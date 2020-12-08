@@ -1,3 +1,4 @@
+//CODES THAT ARE RETURNED IN HTTPS RESPONSE
 const CODES = {
   BADARGUMENT: "BADARGUMENT",
   DATABASE: "DATABSE",
@@ -6,6 +7,7 @@ const CODES = {
   REJECTED: "REJECTED",
 };
 
+//EXPORTS
 module.exports = {
   CODES,
 };
