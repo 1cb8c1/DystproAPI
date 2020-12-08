@@ -13,11 +13,11 @@ BEGIN
     IF(@driversCount < 1)
         THROW 50001, 'Trying to modify driver that doesnt exist for this distributor', 1
 
-    IF(@name != NULL)
+    IF(@name IS NOT NULL)
     BEGIN
         UPDATE drivers SET name = @name WHERE driver_id = @driver_id
     END
-    IF(@surname != NULL)
+    IF(@surname IS NOT NULL)
     BEGIN
         UPDATE drivers SET surname = @surname WHERE driver_id = @driver_id
     END

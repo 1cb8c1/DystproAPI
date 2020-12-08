@@ -12,7 +12,7 @@ const getDrivers = async (distributorId) => {
 };
 
 const addDriver = async (name, surname, distributorId) => {
-  if (distributorId === null || distributorId === undefined) {
+  if (distributorId === undefined || distributorId === null) {
     throw Error(`Distributor is ${distributorId}`);
   }
 
@@ -37,8 +37,43 @@ const removeDriver = async (driverId, distributorId) => {
   );
 };
 
+const modifyDriver = async (driverId, name, surname, distributorId) => {
+  if (distributorId === undefined || distributorId === null) {
+    throw Error(`Distributor is ${distributorId}`);
+  }
+  if (name === undefined || name === null || name.length === 0) {
+    name = null;
+  }
+  if (surname === undefined || surname === null || surname.length === 0) {
+    surname = null;
+  }
+
+  const pool = getPool(P_OWNER);
+  const request = pool.request();
+  request.input("driver_id", sql.Int, driverId);
+  request.input("name", sql.VarChar(32), name);
+  request.input("surname", sql.VarChar(32), surname);
+  request.input("distributor_id", sql.Int, distributorId);
+
+  await request.execute("dbo.modify_driver");
+};
+
+const getDriver = async (driverId, distributorId) => {
+  const pool = getPool(P_OWNER);
+  const request = pool.request();
+  request.input("driver_id", sql.Int, driverId);
+  request.input("distributor_id", sql.Int, distributorId);
+
+  const result = await request.query(
+    "SELECT * FROM get_driver_by_id(@driver_id,@distributor_id)"
+  );
+  return result.recordset[0];
+};
+
 module.exports = {
   getDrivers,
   addDriver,
   removeDriver,
+  modifyDriver,
+  getDriver,
 };
