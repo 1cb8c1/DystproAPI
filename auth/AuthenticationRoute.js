@@ -2,7 +2,7 @@ const express = require("express");
 const { emailExists, createUser, getUserByEmail } = require("../db/users");
 const bodyParser = require("body-parser");
 const { generateToken } = require("./Token");
-const { verifyTokenMiddleware } = require("./AuthenticationMiddleware");
+const authenticationMiddleware = require("./AuthenticationMiddleware");
 const { CODES } = require("../errors/Errors");
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -85,7 +85,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/me", verifyTokenMiddleware, async (req, res) => {
+router.get("/me", authenticationMiddleware, async (req, res) => {
   const user = req.user;
   delete user.password;
   return res.status(200).send({ user: user });
@@ -155,6 +155,6 @@ router.get("/logout", (req, res) => {
 
 router.post("/resetPassword", (req, res) => {});
 
-router.post("/changePassword", verifyTokenMiddleware, (req, res) => {});
+router.post("/changePassword", authenticationMiddleware, (req, res) => {});
 
 module.exports = router;

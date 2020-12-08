@@ -4,7 +4,7 @@ const { CODES } = require("../errors/Errors");
 const jwt = require("jsonwebtoken");
 const { getUserByID } = require("../db/users");
 
-const verifyTokenMiddleware = async (req, res, next) => {
+const authenticationMiddleware = async (req, res, next) => {
   //CHECKING IF TOKEN IS PROVIDED
   const token = req.get("x-access-token");
   if (!token)
@@ -56,6 +56,4 @@ const verifyTokenMiddleware = async (req, res, next) => {
 };
 
 //EXPORTS
-module.exports = {
-  verifyTokenMiddleware,
-};
+module.exports = authenticationMiddleware;

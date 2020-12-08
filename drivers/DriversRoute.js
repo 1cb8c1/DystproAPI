@@ -6,7 +6,7 @@ const DBdrivers = require("../db/drivers");
 const {
   checkAuthorizationMiddleware,
 } = require("../auth/AuthorizationMiddleware");
-const { verifyTokenMiddleware } = require("../auth/AuthenticationMiddleware");
+const authenticationMiddleware = require("../auth/AuthenticationMiddleware");
 const { ROLES } = require("../auth/Roles");
 const sql = require("mssql");
 
@@ -15,7 +15,7 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.use([
-  verifyTokenMiddleware,
+  authenticationMiddleware,
   checkAuthorizationMiddleware(ROLES.DISTRIBUTOR),
 ]);
 
