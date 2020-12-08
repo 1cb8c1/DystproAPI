@@ -1,6 +1,8 @@
+//ROLES USED IN SYSTEM
 const ROLES = {
   ADMIN: "ADMIN",
   DISTRIBUTOR: "DISTRIBUTOR",
 };
 
+//EXPORTS
 module.exports = { ROLES };
