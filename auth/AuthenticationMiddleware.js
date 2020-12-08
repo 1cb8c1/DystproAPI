@@ -4,29 +4,29 @@ const jwt = require("jsonwebtoken");
 const { getUserByID } = require("../db/users");
 
 const verifyTokenMiddleware = async (req, res, next) => {
-  try {
-    const token = req.headers["x-access-token"];
-    if (!token)
-      return res.status(401).send({
-        error: {
-          code: CODES.BADARGUMENT,
-          message: "No token provided.",
-        },
-        auth: false,
-      });
+  //CHECKING IF TOKEN IS PROVIDED
+  const token = req.get("x-access-token");
+  if (!token)
+    return res.status(401).send({
+      error: {
+        code: CODES.BADARGUMENT,
+        message: "No token provided.",
+      },
+      auth: false,
+    });
 
+  try {
     const decoded = jwt.decode(token);
 
+    //IF TOKEN DOESN'T HAVE user_id
+    if (!Object.prototype.hasOwnProperty.call(decoded, "user_id")) {
+      throw new Error("Decoded doesn't have user_id");
+    }
+
+    //IF USER DOESN'T EXIST
     const user = await getUserByID(decoded.user_id);
-    //If user doesn't exist. Should It be checked with userExists too?
     if (user === undefined || user.user_id === undefined) {
-      return res.status(401).send({
-        error: {
-          code: CODES.BADARGUMENT,
-          message: "Failed to verify token.",
-        },
-        auth: false,
-      });
+      throw new Error("User not found");
     }
 
     //ALGORITHM MUST BE SPECIFIED! Otherwise it's vulnerability
@@ -35,17 +35,10 @@ const verifyTokenMiddleware = async (req, res, next) => {
       token,
       CONFIG.SECRET + user.password_creation_date,
       { algorithms: ["HS256"] },
-      (err, decoded) => {
+      (err) => {
         if (err) {
-          return res.status(401).send({
-            error: {
-              code: CODES.BADARGUMENT,
-              message: "Failed to verify token.",
-            },
-            auth: false,
-          });
+          throw new Error("Failed to verify token");
         }
-
         req.user = user;
         next();
       }
