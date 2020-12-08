@@ -4,4 +4,4 @@ AS
 RETURN
 SELECT driver_id, name, surname
 FROM drivers
-WHERE distributor_id = @distributor_id
+WHERE distributor_id = @distributor_id AND archived = 0

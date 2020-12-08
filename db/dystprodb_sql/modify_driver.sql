@@ -8,7 +8,7 @@ BEGIN
     DECLARE @driversCount INT
     SELECT @driversCount = COUNT(driver_id)
     FROM drivers
-    WHERE driver_id = @driver_id AND distributor_id = @distributor_id
+    WHERE driver_id = @driver_id AND distributor_id = @distributor_id AND archived = 0
 
     IF(@driversCount < 1)
         THROW 50001, 'Trying to modify driver that doesnt exist for this distributor', 1
