@@ -1,7 +1,9 @@
+//IMPORTS
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
 const ips = require("../networking/Ips");
 
+//FUNCTIONS
 const insertFailedLogin = async (ip) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
@@ -19,4 +21,5 @@ const getBanishedIpsFromLogin = async () => {
   return result.recordset.map((obj) => obj.ip);
 };
 
+//EXPORTS
 module.exports = { insertFailedLogin, getBanishedIpsFromLogin };

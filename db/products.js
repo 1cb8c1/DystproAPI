@@ -1,6 +1,8 @@
+//IMPORTS
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
 
+//FUNCTIONS
 const getProductsNames = async (orgName) => {
   let name = orgName;
   if (name === undefined) name = "";
@@ -32,6 +34,7 @@ const getProductDetails = async (productId) => {
   return product;
 };
 
+//EXPORTS
 module.exports = {
   getProductsNames,
   getProductDetails,

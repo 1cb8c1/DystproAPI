@@ -1,8 +1,10 @@
+//IMPORTS
 const { ConnectionPool } = require("mssql");
 const POOLS = {};
 const P_OWNER = "OWNER";
 const CONFIG = require("../Config");
 
+//FUNCTIONS
 const createPool = (config, name) => {
   if (getPool(name)) {
     throw new Error("Pool with this name already exists");
@@ -28,12 +30,17 @@ const getPool = (name) => {
 //Populating pools
 const populatePoolsPromise = new Promise(async (resolve, reject) => {
   //Checks if object is empty
-  if (Object.keys(POOLS).length === 0 && POOLS.constructor === Object) {
-    await createPool(CONFIG.SQLAZURECONNSTR_DYSTPROOWNER, P_OWNER);
+  try {
+    if (Object.keys(POOLS).length === 0 && POOLS.constructor === Object) {
+      await createPool(CONFIG.SQLAZURECONNSTR_DYSTPROOWNER, P_OWNER);
+    }
+    resolve();
+  } catch (error) {
+    reject();
   }
-  resolve();
 });
 
+//CLOSING DOWN POOLS, USUALLY USED WHEN CLOSING DOWN APP
 const cleanUp = () => {
   console.log("Closing pools");
   for (const [name, pool] of Object.entries(POOLS)) {
@@ -46,6 +53,7 @@ const cleanUp = () => {
   }
 };
 
+//EXPORTS
 module.exports = {
   closePool,
   createPool,

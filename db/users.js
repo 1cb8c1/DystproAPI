@@ -1,7 +1,9 @@
+//IMPORTS
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
 const { generateHashedPassword } = require("../auth/Password");
 
+//FUNCTIONS
 const emailExists = async (email) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
@@ -65,6 +67,7 @@ const removeUserById = async (id) => {
   await request.query("EXEC dbo.remove_user_procedure @id");
 };
 
+//EXPORTS
 module.exports = {
   userExists,
   emailExists,

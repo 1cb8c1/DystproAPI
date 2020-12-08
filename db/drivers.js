@@ -1,6 +1,8 @@
+//IMPORTS
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
 
+//FUNCTIONS
 const getDrivers = async (distributorId) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
@@ -27,6 +29,7 @@ const addDriver = async (name, surname, distributorId) => {
   return { driver_id: result.output.driver_id, name: name, surname: surname };
 };
 
+//ADDITIONALLY CAN THROW RequestError WITH number THAT IS 50000
 const removeDriver = async (driverId, distributorId) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
@@ -37,6 +40,7 @@ const removeDriver = async (driverId, distributorId) => {
   );
 };
 
+//ADDITIONALLY CAN THROW RequestError WITH number THAT IS 50001
 const modifyDriver = async (driverId, name, surname, distributorId) => {
   if (distributorId === undefined || distributorId === null) {
     throw Error(`Distributor is ${distributorId}`);
@@ -70,6 +74,7 @@ const getDriver = async (driverId, distributorId) => {
   return result.recordset[0];
 };
 
+//EXPORTS
 module.exports = {
   getDrivers,
   addDriver,
