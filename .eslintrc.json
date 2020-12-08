@@ -1,11 +1,15 @@
 {
-  "extends": [
-    "plugin:prettier/recommended","plugin:security/recommended"
-  ],
-
-  "plugins": ["prettier","security"],
-
-  "rules": {
-    "prettier/prettier": "error"
-  }
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": ["eslint:recommended","plugin:prettier/recommended","plugin:security/recommended"],
+    "plugins": ["prettier","security"],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "prettier/prettier": "error"
+    }
 }
