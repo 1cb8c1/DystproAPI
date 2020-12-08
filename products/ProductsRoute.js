@@ -25,7 +25,6 @@ router.get("/", async (req, res) => {
       error: {
         code: CODES.DATABASE,
         message: "Database returned error",
-        innererror: innererror,
       },
       products: null,
     });
