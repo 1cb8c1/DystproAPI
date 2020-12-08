@@ -1,11 +1,11 @@
+/* eslint-disable no-undef */
 jest.setTimeout(10000);
 const request = require("supertest");
-const { getApp, listenHandler, shutDown } = require("../server");
-const { getProductsNames } = require("../db/products");
+const { getApp, shutDown } = require("../server");
 
 //REGISTER
 describe("Products endpoint", () => {
-  it("should get list of products", async (done) => {
+  it("should get list of products", async () => {
     const app = await getApp();
     const result = await request(app).post("/auth/login").send({
       email: "baba@piaskowa.pl",
@@ -23,7 +23,6 @@ describe("Products endpoint", () => {
     ];
     expect(res.statusCode).toBe(200);
     expect(res.body.products).toStrictEqual(expectedResult);
-    done();
   });
 });
 

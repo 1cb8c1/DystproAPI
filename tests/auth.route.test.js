@@ -1,12 +1,11 @@
+/* eslint-disable no-undef */
 jest.setTimeout(10000);
-const { getApp, listenHandler, shutDown } = require("../server");
+const { getApp, shutDown } = require("../server");
 const request = require("supertest");
-const jwt = require("jsonwebtoken");
-const CONFIG = require("../Config");
 const { removeUserById } = require("../db/users");
 
 describe("Login endpoint", () => {
-  it("Login should succeed", async (done) => {
+  it("Login should succeed", async () => {
     const app = await getApp();
     const result = await request(app).post("/auth/login").send({
       email: "baba@piaskowa.pl",
@@ -14,11 +13,9 @@ describe("Login endpoint", () => {
     });
     expect(result.status).toBe(200);
     expect(result.body.auth).toBe(true);
-
-    done();
   });
 
-  it("Login should fail - wrong password", async (done) => {
+  it("Login should fail - wrong password", async () => {
     const app = await getApp();
     const result = await request(app).post("/auth/login").send({
       email: "baba@piaskowa*pl",
@@ -33,11 +30,9 @@ describe("Login endpoint", () => {
         message: "Wrong email or password",
       },
     });
-
-    done();
   });
 
-  it("Login should fail - wrong password", async (done) => {
+  it("Login should fail - wrong password", async () => {
     const app = await getApp();
     const result = await request(app).post("/auth/login").send({
       email: "baba@piaskowa.pl",
@@ -52,13 +47,11 @@ describe("Login endpoint", () => {
         message: "Wrong email or password",
       },
     });
-
-    done();
   });
 });
 
 describe("Register endpoint", () => {
-  it("Registration should succeed", async (done) => {
+  it("Registration should succeed", async () => {
     const app = await getApp();
     const result = await request(app).post("/auth/register").send({
       email: "test@test.test",
@@ -75,8 +68,6 @@ describe("Register endpoint", () => {
 
     expect(result2.status).toBe(200);
     await removeUserById(result2.body.user.user_id);
-
-    done();
   });
 });
 

@@ -1,10 +1,11 @@
+/* eslint-disable no-undef */
 jest.setTimeout(10000);
-const { getApp, listenHandler, shutDown } = require("../server");
+const { getApp, shutDown } = require("../server");
 const { getProductDetails } = require("../db/products");
 
 //REGISTER
 describe("DB products", () => {
-  it("should get details of a product", async (done) => {
+  it("should get details of a product", async () => {
     await getApp();
     const res = await getProductDetails(1);
     const expectedResult = {
@@ -33,7 +34,6 @@ describe("DB products", () => {
       weight: 1500,
     };
     expect(res).toStrictEqual(expectedResult);
-    done();
   });
 });
 

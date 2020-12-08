@@ -1,17 +1,15 @@
+/* eslint-disable no-undef */
 jest.setTimeout(10000);
-const { getApp, listenHandler, shutDown } = require("../server");
-const sql = require("mssql");
+const { getApp, shutDown } = require("../server");
 const {
   userExists,
-  createUser,
   getUserByEmail,
   getUserByID,
-  userAuthorized,
   emailExists,
 } = require("../db/users");
 
 describe("DB get user functions", () => {
-  it("getUserById should succeed", async (done) => {
+  it("getUserById should succeed", async () => {
     await getApp();
     const result = await getUserByID("1");
     const expected = {
@@ -22,9 +20,8 @@ describe("DB get user functions", () => {
       user_id: 1,
     };
     expect(result).toStrictEqual(expected);
-    done();
   });
-  it("getUserByEmail should succeed", async (done) => {
+  it("getUserByEmail should succeed", async () => {
     await getApp();
     const result = await getUserByEmail("baba@piaskowa.pl");
     const expected = {
@@ -35,51 +32,45 @@ describe("DB get user functions", () => {
       user_id: 1,
     };
     expect(result).toStrictEqual(expected);
-    done();
   });
 });
 
 describe("DB exists functions for user", () => {
-  it("user should exist", async (done) => {
+  it("user should exist", async () => {
     await getApp();
     const result = await userExists(1);
     const expected = true;
     expect(result).toBe(expected);
-    done();
   });
 
-  it("user shouldn't exist", async (done) => {
+  it("user shouldn't exist", async () => {
     await getApp();
     const result = await userExists(1000);
     const expected = false;
     expect(result).toBe(expected);
-    done();
   });
 
-  it("email should exist", async (done) => {
+  it("email should exist", async () => {
     await getApp();
     const result = await emailExists("baba@piaskowa.pl");
     const expected = true;
     expect(result).toBe(expected);
-    done();
   });
 
-  it("email shouldn't exist", async (done) => {
+  it("email shouldn't exist", async () => {
     await getApp();
     const result = await emailExists("baba..............piaskowa.pl");
     const expected = false;
     expect(result).toBe(expected);
-    done();
   });
 });
 
 describe("DB should return undefined", () => {
-  it("user should exist", async (done) => {
+  it("user should exist", async () => {
     await getApp();
     const result = await getUserByID(1320001);
     const expected = undefined;
     expect(result).toStrictEqual(expected);
-    done();
   });
 });
 

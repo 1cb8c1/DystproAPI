@@ -10,7 +10,7 @@ const {
 
 //REGISTER
 describe("DB drviers", () => {
-  it("should add and remove driver", async (done) => {
+  it("should add and remove driver", async () => {
     const distributorId = 1;
 
     await getApp();
@@ -28,8 +28,6 @@ describe("DB drviers", () => {
 
     const result3 = await getDriver(result.driver_id, distributorId);
     expect(result3).toBe(undefined);
-
-    done();
   });
 
   it("should fail to remove the driver", async () => {
@@ -40,7 +38,7 @@ describe("DB drviers", () => {
     );
   });
 
-  it("should add, modify only name and remove driver", async (done) => {
+  it("should add, modify only name and remove driver", async () => {
     const distributorId = 1;
 
     await getApp();
@@ -68,8 +66,6 @@ describe("DB drviers", () => {
 
     const result4 = await getDriver(result.driver_id);
     expect(result4).toBe(undefined);
-
-    done();
   });
 });
 
