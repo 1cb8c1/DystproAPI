@@ -1,3 +1,4 @@
+//IMPORTS
 const CONFIG = require("../Config");
 const { CODES } = require("../errors/Errors");
 const jwt = require("jsonwebtoken");
@@ -54,6 +55,7 @@ const verifyTokenMiddleware = async (req, res, next) => {
   }
 };
 
+//EXPORTS
 module.exports = {
   verifyTokenMiddleware,
 };
