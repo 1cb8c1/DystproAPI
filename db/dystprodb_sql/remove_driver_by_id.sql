@@ -8,7 +8,7 @@ BEGIN
     FROM drivers
     WHERE driver_id = @driver_id AND distributor_id = @distributor_id
 
-    IF(@driversCount < 0)
+    IF(@driversCount < 1)
         THROW 50000, 'Trying to delete driver that doesnt exist for this distributor', 1
 
     DELETE drivers WHERE driver_id = @driver_id
