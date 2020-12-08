@@ -27,11 +27,14 @@ const addDriver = async (name, surname, distributorId) => {
   return { driver_id: result.output.driver_id, name: name, surname: surname };
 };
 
-const removeDriver = async (driverId) => {
+const removeDriver = async (driverId, distributorId) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
-  request.input("driver_id", sql.VarChar(32), driverId);
-  await request.query("EXEC dbo.remove_driver_by_id @driver_id");
+  request.input("driver_id", sql.Int, driverId);
+  request.input("distributor_id", sql.Int, distributorId);
+  await request.query(
+    "EXEC dbo.remove_driver_by_id @driver_id, @distributor_id"
+  );
 };
 
 module.exports = {
