@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 jest.setTimeout(10000);
-const { getApp, listenHandler, shutDown } = require("../server");
+const { getApp, shutDown } = require("../server");
 const {
-  getDrivers,
   addDriver,
   removeDriver,
   modifyDriver,
