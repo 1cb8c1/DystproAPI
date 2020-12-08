@@ -3,9 +3,7 @@ const { CODES, DATABASE_ERRORS } = require("../errors/Errors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const DBdrivers = require("../db/drivers");
-const {
-  checkAuthorizationMiddleware,
-} = require("../auth/AuthorizationMiddleware");
+const authorizationMiddleware = require("../auth/AuthorizationMiddleware");
 const authenticationMiddleware = require("../auth/AuthenticationMiddleware");
 const { ROLES } = require("../auth/Roles");
 const sql = require("mssql");
@@ -16,7 +14,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.use([
   authenticationMiddleware,
-  checkAuthorizationMiddleware(ROLES.DISTRIBUTOR),
+  authorizationMiddleware(ROLES.DISTRIBUTOR),
 ]);
 
 //ROUTES

@@ -6,9 +6,7 @@ const { ROLES } = require("../auth/Roles");
 const { CODES } = require("../errors/Errors");
 
 //IMPORTING MIDDLEWARES
-const {
-  checkAuthorizationMiddleware,
-} = require("../auth/AuthorizationMiddleware");
+const authorizationMiddleware = require("../auth/AuthorizationMiddleware");
 const authenticationMiddleware = require("../auth/AuthenticationMiddleware");
 
 //SETTING UP ROUTER
@@ -17,7 +15,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 router.use([
   authenticationMiddleware,
-  checkAuthorizationMiddleware(ROLES.DISTRIBUTOR),
+  authorizationMiddleware(ROLES.DISTRIBUTOR),
 ]);
 
 //ROUTES

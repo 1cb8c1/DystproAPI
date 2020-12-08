@@ -3,7 +3,7 @@ const { userAuthorized } = require("../db/users");
 const { CODES } = require("../errors/Errors");
 
 //Functions
-const checkAuthorizationMiddleware = (role) => {
+const authorizationMiddleware = (role) => {
   return async (req, res, next) => {
     const user = req.user;
 
@@ -21,4 +21,4 @@ const checkAuthorizationMiddleware = (role) => {
 };
 
 //Exports
-module.exports = { checkAuthorizationMiddleware };
+module.exports = authorizationMiddleware;
