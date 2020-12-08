@@ -84,8 +84,8 @@ router.post("/register", async (req, res) => {
     const user = await getUserByEmail(req.body.email);
     const token = generateToken(user);
     return res.status(200).send({ auth: true, token: token });
-  } catch (innererror) {
-    console.log(innererror);
+  } catch (error) {
+    console.log(error);
     return res.status(500).send({
       error: {
         code: CODES.DATABASE,
