@@ -1,6 +1,6 @@
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
-const ips = require("../secuirty/Ips");
+const ips = require("../networking/Ips");
 
 const insertFailedLogin = async (ip) => {
   const pool = getPool(P_OWNER);

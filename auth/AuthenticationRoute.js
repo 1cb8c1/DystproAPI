@@ -9,7 +9,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 const { isPasswordValid } = require("./Password");
 const DBips = require("../db/ips");
-const ips = require("../secuirty/Ips");
+const ips = require("../networking/Ips");
 const { compare } = require("bcryptjs");
 
 router.post("/register", async (req, res) => {
