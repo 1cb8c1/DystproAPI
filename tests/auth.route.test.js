@@ -2,6 +2,7 @@ jest.setTimeout(10000);
 const { getApp, shutDown } = require("../server");
 const request = require("supertest");
 const { removeUserById } = require("../src/models/users");
+const { ROLES } = require("../src/utils/auth/Roles");
 
 describe("Login endpoint", () => {
   it("Login should succeed", async () => {
@@ -67,6 +68,26 @@ describe("Register endpoint", () => {
 
     expect(result2.status).toBe(200);
     await removeUserById(result2.body.user.user_id);
+  });
+});
+
+describe("Roles endpoint", () => {
+  it("Login should succeed", async () => {
+    const app = await getApp();
+    const result = await request(app).post("/auth/login").send({
+      email: "baba@piaskowa.pl",
+      password: "123abc&&ABC",
+    });
+    expect(result.status).toBe(200);
+    expect(result.body.auth).toBe(true);
+
+    const result2 = await request(app)
+      .get("/auth/me/roles")
+      .set("x-access-token", result.body.token)
+      .send({});
+    expect(result2.body).toStrictEqual({
+      roles: [ROLES.DISTRIBUTOR, ROLES.TESTER],
+    });
   });
 });
 
