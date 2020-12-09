@@ -6,7 +6,9 @@ const {
   getUserByEmail,
   getUserByID,
   emailExists,
+  getUserRoles,
 } = require("../src/models/users");
+const { ROLES } = require("../src/utils/auth/Roles");
 
 describe("DB get user functions", () => {
   it("getUserById should succeed", async () => {
@@ -70,6 +72,15 @@ describe("DB should return undefined", () => {
     await getApp();
     const result = await getUserByID(1320001);
     const expected = undefined;
+    expect(result).toStrictEqual(expected);
+  });
+});
+
+describe("DB should return roles", () => {
+  it("user should have two roles", async () => {
+    await getApp();
+    const result = await getUserRoles(1);
+    const expected = [ROLES.DISTRIBUTOR, ROLES.TESTER];
     expect(result).toStrictEqual(expected);
   });
 });
