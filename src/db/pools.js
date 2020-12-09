@@ -36,7 +36,7 @@ const populatePoolsPromise = new Promise(async (resolve, reject) => {
     }
     resolve();
   } catch (error) {
-    reject();
+    reject(error);
   }
 });
 
