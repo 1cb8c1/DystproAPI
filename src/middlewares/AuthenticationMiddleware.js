@@ -1,8 +1,8 @@
 //IMPORTS
-const CONFIG = require("../Config");
+const CONFIG = require("../../Config");
 const { CODES } = require("../errors/Errors");
 const jwt = require("jsonwebtoken");
-const { getUserByID } = require("../db/users");
+const { getUserByID } = require("../models/users");
 
 const authenticationMiddleware = async (req, res, next) => {
   //CHECKING IF TOKEN IS PROVIDED

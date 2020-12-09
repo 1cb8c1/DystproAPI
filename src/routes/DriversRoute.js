@@ -2,10 +2,10 @@
 const { CODES, DATABASE_ERRORS } = require("../errors/Errors");
 const express = require("express");
 const bodyParser = require("body-parser");
-const DBdrivers = require("../db/drivers");
-const authorizationMiddleware = require("../auth/AuthorizationMiddleware");
-const authenticationMiddleware = require("../auth/AuthenticationMiddleware");
-const { ROLES } = require("../auth/Roles");
+const DBdrivers = require("../models/drivers");
+const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
+const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
+const { ROLES } = require("../utils/auth/Roles");
 const sql = require("mssql");
 
 //SETTING UP ROUTER

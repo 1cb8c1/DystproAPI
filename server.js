@@ -2,11 +2,11 @@
 const express = require("express");
 const CONFIG = require("./Config");
 const helmet = require("helmet");
-const pools = require("./db/pools");
+const pools = require("./src/db/pools");
 //ROUTES IMPORTS
-const authRoute = require("./auth/AuthenticationRoute");
-const productsRoute = require("./products/ProductsRoute");
-const driversRoute = require("./drivers/DriversRoute");
+const authRoute = require("./src/routes/AuthenticationRoute");
+const productsRoute = require("./src/routes/ProductsRoute");
+const driversRoute = require("./src/routes/DriversRoute");
 
 //SETTING UP APP
 const app = express();

@@ -1,8 +1,7 @@
-/* eslint-disable no-undef */
 jest.setTimeout(10000);
 const { getApp, shutDown } = require("../server");
 const request = require("supertest");
-const { removeUserById } = require("../db/users");
+const { removeUserById } = require("../src/models/users");
 
 describe("Login endpoint", () => {
   it("Login should succeed", async () => {

@@ -1,5 +1,5 @@
 //IMPORTS
-const { userAuthorized } = require("../db/users");
+const { userAuthorized } = require("../models/users");
 const { CODES } = require("../errors/Errors");
 
 //Functions

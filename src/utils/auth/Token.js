@@ -1,6 +1,6 @@
 //IMPORTS
 const jwt = require("jsonwebtoken");
-const CONFIG = require("../Config");
+const CONFIG = require("../../../Config");
 
 //FUNCTIONS
 //USES DEFAULT HMAC SHA256

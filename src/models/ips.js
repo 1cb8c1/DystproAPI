@@ -1,7 +1,7 @@
 //IMPORTS
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
-const ips = require("../networking/Ips");
+const ips = require("../utils/networking/Ips");
 
 //FUNCTIONS
 const insertFailedLogin = async (ip) => {

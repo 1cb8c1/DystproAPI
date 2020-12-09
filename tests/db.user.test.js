@@ -6,7 +6,7 @@ const {
   getUserByEmail,
   getUserByID,
   emailExists,
-} = require("../db/users");
+} = require("../src/models/users");
 
 describe("DB get user functions", () => {
   it("getUserById should succeed", async () => {

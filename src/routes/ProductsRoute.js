@@ -1,13 +1,13 @@
 //IMPORTS
 const express = require("express");
 const bodyParser = require("body-parser");
-const DBproducts = require("../db/products");
-const { ROLES } = require("../auth/Roles");
+const DBproducts = require("../models/products");
+const { ROLES } = require("../utils/auth/Roles");
 const { CODES } = require("../errors/Errors");
 
 //IMPORTING MIDDLEWARES
-const authorizationMiddleware = require("../auth/AuthorizationMiddleware");
-const authenticationMiddleware = require("../auth/AuthenticationMiddleware");
+const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
+const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
 
 //SETTING UP ROUTER
 const router = express.Router();

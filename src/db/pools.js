@@ -2,7 +2,7 @@
 const { ConnectionPool } = require("mssql");
 const POOLS = {};
 const P_OWNER = "OWNER";
-const CONFIG = require("../Config");
+const CONFIG = require("../../Config");
 
 //FUNCTIONS
 const createPool = (config, name) => {

@@ -6,7 +6,7 @@ const {
   removeDriver,
   modifyDriver,
   getDriver,
-} = require("../db/drivers");
+} = require("../src/models/drivers");
 
 //REGISTER
 describe("DB drviers", () => {

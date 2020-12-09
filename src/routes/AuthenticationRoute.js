@@ -3,17 +3,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 //MIDDLEWARES
-const authenticationMiddleware = require("./AuthenticationMiddleware");
+const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
 //DB
-const DBips = require("../db/ips");
-const { emailExists, createUser, getUserByEmail } = require("../db/users");
+const DBips = require("../models/ips");
+const { emailExists, createUser, getUserByEmail } = require("../models/users");
 const sql = require("mssql");
 //AUTH
-const { generateToken } = require("./Token");
-const { isPasswordValid } = require("./Password");
+const { generateToken } = require("../utils/auth/Token");
+const { isPasswordValid } = require("../utils/auth/Password");
 const { CODES } = require("../errors/Errors");
 //NETWORKING
-const ips = require("../networking/Ips");
+const ips = require("../utils/networking/Ips");
 
 //SETTING UP ROUTER
 const router = express.Router();

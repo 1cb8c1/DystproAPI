@@ -1,7 +1,7 @@
 //IMPORTS
 const { getPool, P_OWNER } = require("../db/pools");
 const sql = require("mssql");
-const { generateHashedPassword } = require("../auth/Password");
+const { generateHashedPassword } = require("../utils/auth/Password");
 
 //FUNCTIONS
 const emailExists = async (email) => {

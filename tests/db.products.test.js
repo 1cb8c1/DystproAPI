@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 jest.setTimeout(10000);
 const { getApp, shutDown } = require("../server");
-const { getProductDetails } = require("../db/products");
+const { getProductDetails } = require("../src/models/products");
 
 //REGISTER
 describe("DB products", () => {

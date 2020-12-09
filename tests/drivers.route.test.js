@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 jest.setTimeout(10000);
 const { getApp, shutDown } = require("../server");
-const { removeDriver, getDriver } = require("../db/drivers");
+const { removeDriver, getDriver } = require("../src/models/drivers");
 const request = require("supertest");
 
 describe("Drivers endpoints", () => {
