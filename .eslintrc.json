@@ -5,8 +5,8 @@
         "es2021": true,
         "node": true
     },
-    "extends": ["eslint:recommended","plugin:prettier/recommended","plugin:security/recommended"],
-    "plugins": ["prettier","security"],
+    "extends": ["eslint:recommended","plugin:prettier/recommended","plugin:security/recommended", "plugin:node/recommended"],
+    "plugins": ["prettier","security", "node"],
     "parserOptions": {
         "ecmaVersion": 12
     },
