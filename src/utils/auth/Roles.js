@@ -2,6 +2,7 @@
 const ROLES = {
   ADMIN: "ADMIN",
   DISTRIBUTOR: "DISTRIBUTOR",
+  TESTER: "TESTER",
 };
 
 //EXPORTS
