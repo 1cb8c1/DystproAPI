@@ -8,6 +8,7 @@ const authenticationMiddleware = require("../middlewares/AuthenticationMiddlewar
 const DBips = require("../models/ips");
 const { emailExists, createUser, getUserByEmail } = require("../models/users");
 const sql = require("mssql");
+const DBusers = require("../models/users");
 //AUTH
 const { generateToken } = require("../utils/auth/Token");
 const { isPasswordValid } = require("../utils/auth/Password");
@@ -202,6 +203,21 @@ router.post("/login", async (req, res) => {
 
 router.get("/logout", (req, res) => {
   res.status(200).send({ auth: false, token: null });
+});
+
+router.get("/me/roles", authenticationMiddleware, async (req, res) => {
+  try {
+    const roles = await DBusers.getUserRoles(req.user.user_id);
+    return res.status(200).send({ roles });
+  } catch (error) {
+    return res.status(500).send({
+      error: {
+        code: CODES.DATABASE,
+        message: "Couldn't obtain roles",
+      },
+      roles: null,
+    });
+  }
 });
 
 /* TODO
