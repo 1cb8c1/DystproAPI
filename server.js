@@ -7,6 +7,7 @@ const pools = require("./src/db/pools");
 const authRoute = require("./src/routes/AuthenticationRoute");
 const productsRoute = require("./src/routes/ProductsRoute");
 const driversRoute = require("./src/routes/DriversRoute");
+const reqeustsRoute = require("./src/routes/RequestsRoute");
 
 //SETTING UP APP
 const app = express();
@@ -26,6 +27,7 @@ app.get("/", async (req, res) => {
 app.use("/auth", authRoute);
 app.use("/products", productsRoute);
 app.use("/drivers", driversRoute);
+app.use("/requests", reqeustsRoute);
 
 //GETAPP, USED TO GET INSTANCE IN TESTS
 const getApp = async () => {
