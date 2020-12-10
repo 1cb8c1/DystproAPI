@@ -8,15 +8,24 @@ const CODES = {
 };
 
 const DATABASE_ERRORS = {
+  50000: {
+    MESSAGE: "Driver doesn't exist",
+    DEVELOPER_INFO:
+      "User tried to delete driver that doesn't exist or is out of scope of his distributor (belongs to different distributor)",
+  },
   50001: {
     MESSAGE: "Driver doesn't exist",
     DEVELOPER_INFO:
       "User tried to modify driver that doesn't exist or is out of scope of his distributor (belongs to different distributor)",
   },
-  50000: {
-    MESSAGE: "Driver doesn't exist",
+  50002: {
+    MESSAGE: "Too many requests",
+    DEVELOPER_INFO: "User exceeded number of requests",
+  },
+  50003: {
+    MESSAGE: "Request doesn't exist",
     DEVELOPER_INFO:
-      "User tried to delete driver that doesn't exist or is out of scope of his distributor (belongs to different distributor)",
+      "User tried to delete request that doesn't exist or is outside of his scope",
   },
 };
 
