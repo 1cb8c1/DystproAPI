@@ -5,7 +5,9 @@ const { CODES } = require("../errors/Errors");
 const requestValidationMiddleware = (schema, returnOnError = null) => {
   return (req, res, next) => {
     const { error } = schema.validate({
-      body: { ...req.body, ...req.params, ...req.query },
+      body: req.body,
+      params: req.params,
+      query: req.query,
     });
     const valid = error == null;
 
