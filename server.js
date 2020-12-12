@@ -8,6 +8,7 @@ const authRoute = require("./src/routes/AuthenticationRoute");
 const productsRoute = require("./src/routes/ProductsRoute");
 const driversRoute = require("./src/routes/DriversRoute");
 const reqeustsRoute = require("./src/routes/RequestsRoute");
+const vechiclesRoute = require("./src/routes/VechiclesRoute");
 
 //SETTING UP APP
 const app = express();
@@ -28,6 +29,7 @@ app.use("/auth", authRoute);
 app.use("/products", productsRoute);
 app.use("/drivers", driversRoute);
 app.use("/requests", reqeustsRoute);
+app.use("/vechicles", vechiclesRoute);
 
 //GETAPP, USED TO GET INSTANCE IN TESTS
 const getApp = async () => {
