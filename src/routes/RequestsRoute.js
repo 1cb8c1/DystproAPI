@@ -29,31 +29,13 @@ router.post(
   requestValidationMiddleware(requestsSchemes.requestsPostSchema, {
     request: null,
   }),
-  async (req, res) => {
+  async (req, res, next) => {
     let request = null;
     try {
       request = await DBrequests.createRequest(req.user.user_id, req.body.info);
     } catch (error) {
-      if (
-        error instanceof sql.RequestError &&
-        Object.prototype.hasOwnProperty.call(error, "number")
-      ) {
-        return res.status(409).send({
-          error: {
-            code: CODES.REJECTED,
-            message: DATABASE_ERRORS[error.number].message,
-          },
-          request: null,
-        });
-      } else {
-        return res.status(500).send({
-          error: {
-            code: CODES.DATABASE,
-            message: "Databse returned error",
-          },
-          request: null,
-        });
-      }
+      error.onResponseData = { request: null };
+      return next(error);
     }
     return res.status(200).send({ request });
   }

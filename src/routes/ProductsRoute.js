@@ -8,6 +8,7 @@ const { CODES } = require("../errors/Errors");
 //IMPORTING MIDDLEWARES
 const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
 const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
+const { NText } = require("mssql");
 
 //SETTING UP ROUTER
 const router = express.Router();
@@ -19,33 +20,23 @@ router.use([
 ]);
 
 //ROUTES
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const products = await DBproducts.getProductsNames(req.body.name);
     return res.status(200).send({ products: products });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      products: null,
-    });
+    error.onResponseData = { products: null };
+    return next(error);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const product = await DBproducts.getProductDetails(req.params.id);
     return res.status(200).send({ product: product });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      product: null,
-    });
+    error.onResponseData = { product: null };
+    return next(error);
   }
 });
 

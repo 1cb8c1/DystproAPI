@@ -22,7 +22,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
 
 //ROUTES
-router.post("/register", async (req, res) => {
+router.post("/register", async (req, res, next) => {
   //CHECKS IF email OR password ARE PROVIDED
   if (req.body.email === undefined || req.body.password === undefined) {
     return res.status(400).send({
@@ -86,15 +86,8 @@ router.post("/register", async (req, res) => {
     const token = generateToken(user);
     return res.status(200).send({ auth: true, token: token });
   } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      auth: false,
-      token: null,
-    });
+    error.onResponseData = { auth: null, token: null };
+    return next(error);
   }
 });
 
@@ -105,7 +98,7 @@ router.get("/me", authenticationMiddleware, async (req, res) => {
   return res.status(200).send({ user: user });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   //FAIL2BAN CHECK
   const banishedIps = await DBips.getBanishedIpsFromLogin();
   if (banishedIps.includes(ips.removePort(req.ip))) {
@@ -146,14 +139,8 @@ router.post("/login", async (req, res) => {
     }
 
     //IF NOT SQL INJECTION, RETURNS DATABASE ERROR
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      auth: false,
-      token: null,
-    });
+    error.onResponseData = { auth: null, token: null };
+    return next(error);
   }
 
   //IF USER DOESN'T EXIST
@@ -205,18 +192,13 @@ router.get("/logout", (req, res) => {
   res.status(200).send({ auth: false, token: null });
 });
 
-router.get("/me/roles", authenticationMiddleware, async (req, res) => {
+router.get("/me/roles", authenticationMiddleware, async (req, res, next) => {
   try {
     const roles = await DBusers.getUserRoles(req.user.user_id);
     return res.status(200).send({ roles });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Couldn't obtain roles",
-      },
-      roles: null,
-    });
+    error.onResponseData = { roles: null };
+    return next(error);
   }
 });
 

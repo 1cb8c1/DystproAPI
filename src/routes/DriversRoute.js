@@ -18,37 +18,27 @@ router.use([
 ]);
 
 //ROUTES
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const drivers = await DBdrivers.getDrivers(req.user.distributor);
     return res.status(200).send({ drivers: drivers });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      drivers: null,
-    });
+    error.onResponseData = { drivers: null };
+    return next(error);
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const driver = DBdrivers.getDriver(req.params.id, req.user.distributor);
     return res.status(200).send({ driver: driver });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      driver: null,
-    });
+    error.onResponseData = { driver: null };
+    return next(error);
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", async (req, res, next) => {
   //CHECKING IF ARGUMENTS ARE CORRECT
   try {
     if (!Object.prototype.hasOwnProperty.call(req.body, "driver")) {
@@ -80,42 +70,22 @@ router.post("/", async (req, res) => {
 
     return res.status(200).send({ driver: driver });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      driver: null,
-    });
+    error.onResponseData = { driver: null };
+    return next(error);
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", async (req, res, next) => {
   //TRYING TO REMOVE DRIVER
   try {
     await DBdrivers.removeDriver(req.params.id, req.user.distributor);
     return res.status(200).send({});
   } catch (error) {
-    if (
-      error instanceof sql.RequestError &&
-      Object.prototype.hasOwnProperty.call(error, "number")
-    ) {
-      return res.status(500).send({
-        code: CODES.DATABASE,
-        message: DATABASE_ERRORS[error.number].MESSAGE,
-      });
-    } else {
-      return res.status(500).send({
-        error: {
-          code: CODES.DATABASE,
-          message: "Database returned error",
-        },
-      });
-    }
+    return next(error);
   }
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", async (req, res, next) => {
   //TRYING TO MODIFY DRIVER
   try {
     await DBdrivers.modifyDriver(
@@ -125,26 +95,8 @@ router.patch("/:id", async (req, res) => {
       req.user.distributor
     );
   } catch (error) {
-    if (
-      error instanceof sql.RequestError &&
-      Object.prototype.hasOwnProperty.call(error, "number")
-    ) {
-      return res(500).send({
-        error: {
-          code: CODES.DATABASE,
-          message: DATABASE_ERRORS[error.number].MESSAGE,
-        },
-        driver: null,
-      });
-    } else {
-      return res.status(500).send({
-        error: {
-          code: CODES.DATABASE,
-          message: "Database returned error",
-        },
-        driver: null,
-      });
-    }
+    error.onResponseData = { driver: null };
+    return next(error);
   }
 
   //TRYING TO GET MODIFIED DRIVER
@@ -155,13 +107,8 @@ router.patch("/:id", async (req, res) => {
     );
     return res.status(200).send({ driver: driver });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      driver: null,
-    });
+    error.onResponseData = { driver: null };
+    return next(error);
   }
 });
 

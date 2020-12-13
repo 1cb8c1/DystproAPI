@@ -1,5 +1,4 @@
 //IMPORTS
-const { CODES, DATABASE_ERRORS } = require("../errors/Errors");
 const express = require("express");
 const bodyParser = require("body-parser");
 const DBvechicles = require("../models/vechicles");
@@ -8,7 +7,6 @@ const authenticationMiddleware = require("../middlewares/AuthenticationMiddlewar
 const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
 const schemes = require("../schemas/VechiclesSchemes");
 const { ROLES } = require("../utils/auth/Roles");
-const sql = require("mssql");
 
 //SETTING UP ROUTER
 const router = express.Router();
@@ -20,25 +18,20 @@ router.use([
 ]);
 
 //ROUTES
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
   try {
     const vechicles = await DBvechicles.getVechicles(req.user.distributor);
     return res.status(200).send({ vechicles: vechicles });
   } catch (error) {
-    return res.status(500).send({
-      error: {
-        code: CODES.DATABASE,
-        message: "Database returned error",
-      },
-      vechicles: null,
-    });
+    error.onResponseData = { vechicles: null };
+    return next(error);
   }
 });
 
 router.get(
   "/:id",
   requestValidationMiddleware(schemes.vechiclesGetSchema),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const vechicle = await DBvechicles.getVechicle(
         req.params.id,
@@ -46,13 +39,8 @@ router.get(
       );
       return res.status(200).send({ vechicle: vechicle });
     } catch (error) {
-      return res.status(500).send({
-        error: {
-          code: CODES.DATABASE,
-          message: "Database returned error",
-        },
-        vechicle: null,
-      });
+      error.onResponseData = { vechicle: null };
+      return next(error);
     }
   }
 );
@@ -60,7 +48,7 @@ router.get(
 router.post(
   "/",
   requestValidationMiddleware(schemes.vechiclesPostSchema),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       const vechicle = await DBvechicles.addVechicle(
         req.body.vechicle.registration_number,
@@ -68,13 +56,8 @@ router.post(
       );
       return res.status(200).send({ vechicle: vechicle });
     } catch (error) {
-      return res.status(500).send({
-        error: {
-          code: CODES.DATABASE,
-          message: "Database returned error",
-        },
-        vechicle: null,
-      });
+      error.onResponseData({ vechicle: null });
+      return next(error);
     }
   }
 );
@@ -82,18 +65,12 @@ router.post(
 router.delete(
   "/:id",
   requestValidationMiddleware(schemes.vechiclesDeleteSchema),
-  async (req, res) => {
+  async (req, res, next) => {
     try {
       await DBvechicles.removeVechicle(req.params.id, req.user.distributor);
       return res.status(200).send({});
     } catch (error) {
-      console.log(error);
-      return res.status(500).send({
-        error: {
-          code: CODES.DATABASE,
-          message: "Database returned error",
-        },
-      });
+      return next(error);
     }
   }
 );
