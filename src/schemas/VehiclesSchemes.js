@@ -2,9 +2,9 @@
 const joi = require("joi");
 
 //SCHEMES
-const vechiclesPostSchema = joi.object().keys({
+const vehiclesPostSchema = joi.object().keys({
   body: joi.object().keys({
-    vechicle: joi
+    vehicle: joi
       .object()
       .keys({
         registration_number: joi.string().min(1).max(16).required(),
@@ -15,7 +15,7 @@ const vechiclesPostSchema = joi.object().keys({
   query: joi.object().optional(),
 });
 
-const vechiclesGetSchema = joi.object().keys({
+const vehiclesGetSchema = joi.object().keys({
   body: joi.object().optional(),
   params: joi
     .object()
@@ -26,7 +26,7 @@ const vechiclesGetSchema = joi.object().keys({
   query: joi.object().optional(),
 });
 
-const vechiclesDeleteSchema = joi.object().keys({
+const vehiclesDeleteSchema = joi.object().keys({
   body: joi.object().optional(),
   params: joi
     .object()
@@ -39,7 +39,7 @@ const vechiclesDeleteSchema = joi.object().keys({
 
 //EXPORTS
 module.exports = {
-  vechiclesPostSchema,
-  vechiclesGetSchema,
-  vechiclesDeleteSchema,
+  vehiclesPostSchema,
+  vehiclesGetSchema,
+  vehiclesDeleteSchema,
 };

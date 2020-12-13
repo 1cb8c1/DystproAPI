@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 jest.setTimeout(10000);
 const { getApp, shutDown } = require("../server");
-const DBvechicles = require("../src/models/vechicles");
+const DBvehicles = require("../src/models/vehicles");
 const request = require("supertest");
 const { default: expectCt } = require("helmet/dist/middlewares/expect-ct");
 
-describe("Vechicles endpoints", () => {
+describe("Vehicles endpoints", () => {
   it("tests post endpoint", async () => {
     const distributorId = 1;
 
@@ -15,22 +15,22 @@ describe("Vechicles endpoints", () => {
       password: "123abc&&ABC",
     });
 
-    const vechicle = {
+    const vehicle = {
       registration_number: "Test123",
     };
 
     const result2 = await request(app)
-      .post("/vechicles")
+      .post("/vehicles")
       .set("x-access-token", result.body.token)
-      .send({ vechicle: vechicle });
+      .send({ vehicle: vehicle });
 
     expect(result2.status).toBe(200);
-    expect(result2.body.vechicle.registration_number).toBe(
-      vechicle.registration_number
+    expect(result2.body.vehicle.registration_number).toBe(
+      vehicle.registration_number
     );
 
-    await DBvechicles.removeVechicle(
-      result2.body.vechicle.vechicle_id,
+    await DBvehicles.removeVehicle(
+      result2.body.vehicle.vehicle_id,
       distributorId
     );
   });
@@ -44,23 +44,23 @@ describe("Vechicles endpoints", () => {
       password: "123abc&&ABC",
     });
 
-    const result2 = await DBvechicles.addVechicle("Test123", distributorId);
+    const result2 = await DBvehicles.addVehicle("Test123", distributorId);
 
     const result3 = await request(app)
-      .delete(`/vechicles/${result2.vechicle_id}`)
+      .delete(`/vehicles/${result2.vehicle_id}`)
       .set("x-access-token", result.body.token)
       .send({});
 
     expect(result3.status).toBe(200);
 
-    const result4 = await DBvechicles.getVechicle(
-      result2.vechicle_id,
+    const result4 = await DBvehicles.getVehicle(
+      result2.vehicle_id,
       distributorId
     );
     expect(result4).toBe(undefined);
   });
 
-  it("tests get vechicles endpoint", async () => {
+  it("tests get vehicles endpoint", async () => {
     const distributorId = 1;
 
     const app = await getApp();
@@ -69,24 +69,24 @@ describe("Vechicles endpoints", () => {
       password: "123abc&&ABC",
     });
 
-    const result2 = await DBvechicles.addVechicle("TEST123", distributorId);
-    const result3 = await DBvechicles.addVechicle("TEST124", distributorId);
-    const result4 = await DBvechicles.addVechicle("TEST125", distributorId);
+    const result2 = await DBvehicles.addVehicle("TEST123", distributorId);
+    const result3 = await DBvehicles.addVehicle("TEST124", distributorId);
+    const result4 = await DBvehicles.addVehicle("TEST125", distributorId);
 
     const result5 = await request(app)
-      .get("/vechicles")
+      .get("/vehicles")
       .set("x-access-token", result.body.token)
       .send({});
 
     expect(result5.status).toBe(200);
-    expect(result5.body.vechicles.length).toBe(3);
+    expect(result5.body.vehicles.length).toBe(3);
 
-    await DBvechicles.removeVechicle(result2.vechicle_id, distributorId);
-    await DBvechicles.removeVechicle(result3.vechicle_id, distributorId);
-    await DBvechicles.removeVechicle(result4.vechicle_id, distributorId);
+    await DBvehicles.removeVehicle(result2.vehicle_id, distributorId);
+    await DBvehicles.removeVehicle(result3.vehicle_id, distributorId);
+    await DBvehicles.removeVehicle(result4.vehicle_id, distributorId);
   });
 
-  it("tests get vechicle endpoint", async () => {
+  it("tests get vehicle endpoint", async () => {
     const distributorId = 1;
 
     const app = await getApp();
@@ -95,14 +95,14 @@ describe("Vechicles endpoints", () => {
       password: "123abc&&ABC",
     });
 
-    const result2 = await DBvechicles.addVechicle("TEST123", distributorId);
+    const result2 = await DBvehicles.addVehicle("TEST123", distributorId);
 
     const result3 = await request(app)
-      .get(`/vechicles/${result2.vechicle_id}`)
+      .get(`/vehicles/${result2.vehicle_id}`)
       .set("x-access-token", result.body.token)
       .send({});
 
-    await DBvechicles.removeVechicle(result2.vechicle_id, distributorId);
+    await DBvehicles.removeVehicle(result2.vehicle_id, distributorId);
 
     expect(result3.status).toBe(200);
   });

@@ -1,11 +1,11 @@
 //IMPORTS
 const express = require("express");
 const bodyParser = require("body-parser");
-const DBvechicles = require("../models/vechicles");
+const DBvehicles = require("../models/vehicles");
 const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
 const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
 const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
-const schemes = require("../schemas/VechiclesSchemes");
+const schemes = require("../schemas/VehiclesSchemes");
 const { ROLES } = require("../utils/auth/Roles");
 
 //SETTING UP ROUTER
@@ -20,26 +20,26 @@ router.use([
 //ROUTES
 router.get("/", async (req, res, next) => {
   try {
-    const vechicles = await DBvechicles.getVechicles(req.user.distributor);
-    return res.status(200).send({ vechicles: vechicles });
+    const vehicles = await DBvehicles.getVehicles(req.user.distributor);
+    return res.status(200).send({ vehicles: vehicles });
   } catch (error) {
-    error.onResponseData = { vechicles: null };
+    error.onResponseData = { vehicles: null };
     return next(error);
   }
 });
 
 router.get(
   "/:id",
-  requestValidationMiddleware(schemes.vechiclesGetSchema),
+  requestValidationMiddleware(schemes.vehiclesGetSchema),
   async (req, res, next) => {
     try {
-      const vechicle = await DBvechicles.getVechicle(
+      const vehicle = await DBvehicles.getVehicle(
         req.params.id,
         req.user.distributor
       );
-      return res.status(200).send({ vechicle: vechicle });
+      return res.status(200).send({ vehicle: vehicle });
     } catch (error) {
-      error.onResponseData = { vechicle: null };
+      error.onResponseData = { vehicle: null };
       return next(error);
     }
   }
@@ -47,16 +47,16 @@ router.get(
 
 router.post(
   "/",
-  requestValidationMiddleware(schemes.vechiclesPostSchema),
+  requestValidationMiddleware(schemes.vehiclesPostSchema),
   async (req, res, next) => {
     try {
-      const vechicle = await DBvechicles.addVechicle(
-        req.body.vechicle.registration_number,
+      const vehicle = await DBvehicles.addVehicle(
+        req.body.vehicle.registration_number,
         req.user.distributor
       );
-      return res.status(200).send({ vechicle: vechicle });
+      return res.status(200).send({ vehicle: vehicle });
     } catch (error) {
-      error.onResponseData({ vechicle: null });
+      error.onResponseData({ vehicle: null });
       return next(error);
     }
   }
@@ -64,10 +64,10 @@ router.post(
 
 router.delete(
   "/:id",
-  requestValidationMiddleware(schemes.vechiclesDeleteSchema),
+  requestValidationMiddleware(schemes.vehiclesDeleteSchema),
   async (req, res, next) => {
     try {
-      await DBvechicles.removeVechicle(req.params.id, req.user.distributor);
+      await DBvehicles.removeVehicle(req.params.id, req.user.distributor);
       return res.status(200).send({});
     } catch (error) {
       return next(error);
