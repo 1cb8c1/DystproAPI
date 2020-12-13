@@ -9,6 +9,8 @@ const productsRoute = require("./src/routes/ProductsRoute");
 const driversRoute = require("./src/routes/DriversRoute");
 const reqeustsRoute = require("./src/routes/RequestsRoute");
 const vechiclesRoute = require("./src/routes/VechiclesRoute");
+//ERROR HANDLER IMPORT
+const errorHandler = require("./src/errors/ErrorsHandler");
 
 //SETTING UP APP
 const app = express();
@@ -30,6 +32,9 @@ app.use("/products", productsRoute);
 app.use("/drivers", driversRoute);
 app.use("/requests", reqeustsRoute);
 app.use("/vechicles", vechiclesRoute);
+
+//USING ERROR HANDLER
+app.use(errorHandler);
 
 //GETAPP, USED TO GET INSTANCE IN TESTS
 const getApp = async () => {
