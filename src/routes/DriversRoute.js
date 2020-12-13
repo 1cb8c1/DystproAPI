@@ -8,7 +8,7 @@ const authenticationMiddleware = require("../middlewares/AuthenticationMiddlewar
 const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
 const { ROLES } = require("../utils/auth/Roles");
 const sql = require("mssql");
-const schemas = require("../schemas/DriversSchemes");
+const schemas = require("../schemas/DriversSchemas");
 
 //SETTING UP ROUTER
 const router = express.Router();

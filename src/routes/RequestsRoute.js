@@ -12,7 +12,7 @@ const authenticationMiddleware = require("../middlewares/AuthenticationMiddlewar
 const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
 
 //IMPORTING SCHEMES
-const requestsSchemes = require("../schemas/RequestsSchemes");
+const requestsSchemas = require("../schemas/RequestsSchemas");
 
 //SETTING UP ROUTER
 const router = express.Router();
@@ -26,7 +26,7 @@ router.use([
 //ROUTES
 router.post(
   "/",
-  requestValidationMiddleware(requestsSchemes.requestsPostSchema, {
+  requestValidationMiddleware(requestsSchemas.requestsPostSchema, {
     request: null,
   }),
   async (req, res, next) => {

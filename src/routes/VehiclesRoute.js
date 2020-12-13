@@ -5,7 +5,7 @@ const DBvehicles = require("../models/vehicles");
 const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
 const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
 const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
-const schemes = require("../schemas/VehiclesSchemes");
+const schemas = require("../schemas/VehiclesSchemas");
 const { ROLES } = require("../utils/auth/Roles");
 
 //SETTING UP ROUTER
@@ -30,7 +30,7 @@ router.get("/", async (req, res, next) => {
 
 router.get(
   "/:id",
-  requestValidationMiddleware(schemes.vehiclesGetSchema),
+  requestValidationMiddleware(schemas.vehiclesGetSchema),
   async (req, res, next) => {
     try {
       const vehicle = await DBvehicles.getVehicle(
@@ -47,7 +47,7 @@ router.get(
 
 router.post(
   "/",
-  requestValidationMiddleware(schemes.vehiclesPostSchema),
+  requestValidationMiddleware(schemas.vehiclesPostSchema),
   async (req, res, next) => {
     try {
       const vehicle = await DBvehicles.addVehicle(
@@ -64,7 +64,7 @@ router.post(
 
 router.delete(
   "/:id",
-  requestValidationMiddleware(schemes.vehiclesDeleteSchema),
+  requestValidationMiddleware(schemas.vehiclesDeleteSchema),
   async (req, res, next) => {
     try {
       await DBvehicles.removeVehicle(req.params.id, req.user.distributor);
