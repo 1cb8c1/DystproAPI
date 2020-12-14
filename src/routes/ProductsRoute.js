@@ -8,7 +8,10 @@ const { CODES } = require("../errors/Errors");
 //IMPORTING MIDDLEWARES
 const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
 const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
-const { NText } = require("mssql");
+const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
+
+//IMPORTING schemas
+const schemas = require("../schemas/ProductsSchemas");
 
 //SETTING UP ROUTER
 const router = express.Router();
@@ -30,15 +33,19 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const product = await DBproducts.getProductDetails(req.params.id);
-    return res.status(200).send({ product: product });
-  } catch (error) {
-    error.onResponseData = { product: null };
-    return next(error);
+router.get(
+  "/:id",
+  requestValidationMiddleware(schemas.productsGetSchema, { product: null }),
+  async (req, res, next) => {
+    try {
+      const product = await DBproducts.getProductDetails(req.params.id);
+      return res.status(200).send({ product: product });
+    } catch (error) {
+      error.onResponseData = { product: null };
+      return next(error);
+    }
   }
-});
+);
 
 //EXPORTS
 module.exports = router;
