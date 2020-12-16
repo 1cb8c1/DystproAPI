@@ -2,12 +2,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const DBrequests = require("../models/requests");
-const { ROLES } = require("../utils/auth/Roles");
 const { CODES, DATABASE_ERRORS } = require("../errors/Errors");
 const sql = require("mssql");
 
 //IMPORTING MIDDLEWARES
-const authorizationMiddleware = require("../middlewares/AuthorizationMiddleware");
 const authenticationMiddleware = require("../middlewares/AuthenticationMiddleware");
 const requestValidationMiddleware = require("../middlewares/RequestValidationMiddleware");
 
@@ -18,10 +16,7 @@ const requestsSchemas = require("../schemas/RequestsSchemas");
 const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-router.use([
-  authenticationMiddleware,
-  authorizationMiddleware(ROLES.DISTRIBUTOR),
-]);
+router.use(authenticationMiddleware);
 
 //ROUTES
 router.post(
