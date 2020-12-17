@@ -6,7 +6,7 @@ const sql = require("mssql");
 const getDrivers = async (distributorId) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
-  request.input("distributor_id", sql.VarChar(64), distributorId);
+  request.input("distributor_id", sql.Int, distributorId);
   const result = await request.query(
     "SELECT * FROM get_drivers_by_distributor_id(@distributor_id)"
   );
