@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 const { getApp, shutDown } = require("../server");
 const DBvehicles = require("../src/models/vehicles");
 const request = require("supertest");

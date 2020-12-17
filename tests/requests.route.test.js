@@ -1,4 +1,4 @@
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 const { getApp, shutDown } = require("../server");
 const request = require("supertest");
 const { removeRequest } = require("../src/models/requests");

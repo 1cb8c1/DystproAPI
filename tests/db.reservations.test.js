@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 const { getApp, shutDown } = require("../server");
 const DBproducts = require("../src/models/products");
 const DBreservations = require("../src/models/reservations");
