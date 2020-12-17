@@ -1,0 +1,9 @@
+CREATE TABLE warehouses
+(
+    name NVARCHAR(32) NOT NULL UNIQUE,
+    city NVARCHAR(32) NOT NULL,
+    street NVARCHAR(32) NOT NULL,
+    archived BIT NOT NULL DEFAULT 0,
+    PRIMARY KEY(name)
+)
+GO
