@@ -2,14 +2,35 @@
 
 ## Overview
 
-This project is used as REST API for distproapp.
-All API access is over HTTPS and can be accesed from [dystproapi.azurewebsites.net](dystproapi.azurewebsites.net)
+This project is used as REST API for dystproapp.
+The goal of dystproapp is to provide a system that helps in the manufacturers logictics.
 
-All data is sent and received as JSON expect one example (because of project specification to use at least one XML endpoint)
+All data is sent and received as JSON expect one example (because of project specification to use at least one XML endpoint). API can be accessed through dystproapi.azurewebsites.net.
 
 <br/><br/>
 
+## Running dystproapi
+
+In order to run dystproapi use command `npm start`.
+To run tests use `npm test`.
+
+<br/><br/>
+
+## Configuration
+
+Configuration is in the file Config.js <br/>
+Values of `SECRET`, `PORT` and `SQLAZURECONNSTR_DYSTPROOWNER` are set through
+environment variables (through azure).<br/>
+`SECRET` (with password creation date) is used for signing tokens.<br/>
+`PORT` specifies port that app will be listening to.<br/>
+`SQLAZURECONNSTR_DYSTPROOWNER` is database connection string.
+
+<br/><br/>
+<br/><br/>
+
 ---
+
+# API
 
 ## Authentication
 
@@ -368,6 +389,81 @@ User doesn't have permissions to access this resourse.
 
 <br/><br/>
 
+### Roles
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+In order to access some endpoints, header <b>x-access-token</b> is required. Token can be retrived by login.
+
+<br/><br/>
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>GET</td>
+        <td>/auth/me/roles</td>
+        <td>
+            <pre>
+</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body </th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>401</td>
+<td>
+<pre>
+{
+    roles: 
+    [
+        "DISTRIBUTOR",
+        "TESTER"
+    ],
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
 ---
 
 ## Products
@@ -495,30 +591,35 @@ Responses:
 <tr>
 <td>200</td>
 <td>
-<pre>
-      availability: [
+<pre>{ 
+    product:
         {
-          amount: 300,
-          product_warehouse_id: 1,
-          warehouse_name: "Lódz Baluty 1",
-        },
-        {
-          amount: 100,
-          product_warehouse_id: 2,
-          warehouse_name: "Lódz Baluty 2",
-        },
-        {
-          amount: 0,
-          product_warehouse_id: 3,
-          warehouse_name: "Lódz Baluty 3",
-        },
-      ],
-      name: "Plytki wielkorzebne czarne",
-      price: 3000,
-      product_id: 1,
-      unit_name: "m2",
-      unit_number: 300,
-      weight: 1500,</pre>
+        availability: [
+            {
+            amount: 300,
+            product_warehouse_id: 1,
+            warehouse_name: "Lódz Baluty 1",
+            },
+            {
+            amount: 100,
+            product_warehouse_id: 2,
+            warehouse_name: "Lódz Baluty 2",
+            },
+            {
+            amount: 0,
+            product_warehouse_id: 3,
+            warehouse_name: "Lódz Baluty 3",
+            },
+        ],
+        name: "Plytki wielkorzebne czarne",
+        price: 3000,
+        product_id: 1,
+        unit_name: "m2",
+        unit_number: 300,
+        weight: 1500,
+        }
+}      
+</pre>
 </td>
 <td>
 Successful request
@@ -764,6 +865,562 @@ Successful request
 If you want to update only name, just don't include surname.
 
 Example: /drivers/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+<br/><br/>
+
+---
+
+## Vehicles
+
+In order to use vehicles endpoints - route `/vehicles` is used. So url will be: dystproapi.azurewebsites.net/vehicles/
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+### List of vehicles
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/vehicles/</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{ 
+    vehicles: [
+        { 
+            vehicle_id: 1, 
+            registration_number: "TMD 8836",
+        },
+        {      
+            vehicle_id: 2, 
+            registration_number: "TDA 5579",
+        }
+    ]
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Add vehicle
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> POST </td>
+        <td>/vehicles/</td>
+        <td>
+<pre>{
+    vehicle: 
+        { 
+            vehicle_id: 1, 
+        }
+} 
+</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+    vehicle: 
+        { 
+            vehicle_id: 1, 
+            registration_number: "TMD 8836",
+        }
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Remove vehicle
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> DELETE </td>
+        <td>/vehicles/:id</td>
+        <td>
+<pre> 
+</pre>
+        </td>
+    </tbody>
+</table>
+Example: /vehicles/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+<br/><br/>
+
+---
+
+## Requests
+
+In order to use requests endpoints - route `/requests` is used. So url will be: dystproapi.azurewebsites.net/requests/
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+### Add request
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> POST </td>
+        <td>/requests/</td>
+        <td>
+            <pre>{ 
+    info: "please add me to..."
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{ 
+    request: {
+        request_id: 1,
+        info: "please add me to..."
+    }
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+<br/><br/>
+
+---
+
+## Reservations
+
+In order to use reservations endpoints - route `/reservations` is used. So url will be: dystproapi.azurewebsites.net/reservations/
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+### Get request
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/reservations/:id</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+example: /reservations/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+        reservation: {
+          reservation_id: 170,
+          product_warehouse_id: 1,
+          amount: 50,
+          reservation_date: '2020-12-17T10:51:13.687Z',
+          price: 142500,
+          product_id: 1,
+          name: 'Plytki wielkorzebne czarne',
+          warehouse_name: 'Lódz Baluty 1'
+        }
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Get reservations
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/reservations</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+        reservations: [
+            {
+                reservation_id: 170,
+                product_warehouse_id: 1,
+                amount: 50,
+                reservation_date: '2020-12-17T10:51:13.687Z',
+                price: 142500,
+                product_id: 1,
+                name: 'Plytki wielkorzebne czarne',
+                warehouse_name: 'Lódz Baluty 1'
+            },
+            {
+                reservation_id: 180,
+                product_warehouse_id: 2,
+                amount: 150,
+                reservation_date: '2020-10-17T12:53:10.687Z',
+                price: 400500,
+                product_id: 1,
+                name: 'Plytki wielkorzebne czarne',
+                warehouse_name: 'Lódz Baluty 2'
+            }
+        ]
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Add reservation
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> POST </td>
+        <td>/reservations</td>
+        <td>
+<pre>{
+        reservation: {
+          product_warehouse_id: 1,
+          amount: 100,
+        },
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+        reservation: {
+          reservation_id: 170,
+          product_warehouse_id: 1,
+          amount: 50,
+          reservation_date: '2020-12-17T10:51:13.687Z',
+          price: 142500,
+          product_id: 1,
+          name: 'Plytki wielkorzebne czarne',
+          warehouse_name: 'Lódz Baluty 1'
+        }
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Delete reservation
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> DELETE </td>
+        <td>/reservations/:id</td>
+        <td>
+<pre></pre>
+        </td>
+    </tbody>
+</table>
+example: /reservations/1
 
 <br/><br/>
 
