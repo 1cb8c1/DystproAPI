@@ -2,7 +2,7 @@ SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-CREATE FUNCTION [dbo].[get_products_names](@name VARCHAR(32))
+CREATE FUNCTION [dbo].[get_products_names](@name NVARCHAR(32))
 RETURNS TABLE
 AS
 RETURN

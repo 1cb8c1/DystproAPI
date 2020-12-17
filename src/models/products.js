@@ -8,7 +8,7 @@ const getProductsNames = async (orgName) => {
   if (name === undefined) name = "";
   const pool = getPool(P_OWNER);
   const request = pool.request();
-  request.input("name", sql.VarChar(32), name);
+  request.input("name", sql.NVarChar(32), name);
   const result = await request.query(
     "SELECT * FROM dbo.get_products_names(@name)"
   );
