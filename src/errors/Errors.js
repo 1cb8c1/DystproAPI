@@ -87,7 +87,9 @@ const DATABASE_ERRORS = {
   50011: {
     MESSAGE: "Product in such warehouse doesn't exist",
     DEVELOPER_INFO:
-      "Reservation had product_warehouse_id that doesn't exist in table products_warehouses. This shouldn't happen, as all products_warehouses are archived",
+      "Reservation had product_warehouse_id that doesn't exist in table products_warehouses." +
+      "This shouldn't happen when canceling, as all products_warehouses are archived." +
+      "But this can happen when creating reservation and providing non-existant product_warehouse or that product_warehouse is archived",
     CODE: CODES.LOGIC,
     STATUS: 500,
   },
