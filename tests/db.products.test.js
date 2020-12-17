@@ -13,17 +13,17 @@ describe("DB products", () => {
         {
           amount: 300,
           product_warehouse_id: 1,
-          warehouse_name: "Lódz Baluty 1",
+          warehouse_name: "Łódź Bałuty 1",
         },
         {
           amount: 100,
           product_warehouse_id: 2,
-          warehouse_name: "Lódz Baluty 2",
+          warehouse_name: "Łódź Bałuty 2",
         },
         {
           amount: 0,
           product_warehouse_id: 3,
-          warehouse_name: "Lódz Baluty 3",
+          warehouse_name: "Łódź Bałuty 3",
         },
       ],
       name: "Plytki wielkorzebne czarne",
