@@ -1,7 +1,7 @@
 CREATE PROCEDURE modify_driver
     @driver_id INT,
-    @name VARCHAR(32),
-    @surname VARCHAR(32),
+    @name NVARCHAR(32),
+    @surname NVARCHAR(32),
     @distributor_id INT
 AS
 BEGIN

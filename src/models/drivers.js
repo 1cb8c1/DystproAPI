@@ -20,8 +20,8 @@ const addDriver = async (name, surname, distributorId) => {
 
   const pool = getPool(P_OWNER);
   const request = pool.request();
-  request.input("name", sql.VarChar(32), name);
-  request.input("surname", sql.VarChar(32), surname);
+  request.input("name", sql.NVarChar(32), name);
+  request.input("surname", sql.NVarChar(32), surname);
   request.input("distributor_id", sql.Int, distributorId);
   request.output("driver_id", sql.Int);
 
@@ -55,8 +55,8 @@ const modifyDriver = async (driverId, name, surname, distributorId) => {
   const pool = getPool(P_OWNER);
   const request = pool.request();
   request.input("driver_id", sql.Int, driverId);
-  request.input("name", sql.VarChar(32), name);
-  request.input("surname", sql.VarChar(32), surname);
+  request.input("name", sql.NVarChar(32), name);
+  request.input("surname", sql.NVarChar(32), surname);
   request.input("distributor_id", sql.Int, distributorId);
 
   await request.execute("dbo.modify_driver");
