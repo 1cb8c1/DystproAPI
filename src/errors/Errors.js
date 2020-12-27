@@ -107,6 +107,65 @@ const DATABASE_ERRORS = {
     CODE: CODES.LOGIC,
     STATUS: 500,
   },
+  50014: {
+    MESSAGE: "Reservation doesn't exist",
+    DEVELOPER_INFO:
+      "User tried to create a dispatch with non-existant reservation",
+    CODE: CODES.NOTFOUND,
+    STATUS: 404,
+  },
+  50015: {
+    MESSAGE: "Dispatch with such id doesn't exist",
+    DEVELOPER_INFO:
+      "When creating dispatched_product, wrong dispatch_id was provided. It shouldn't happen because dispatch_id is not provided by user",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50016: {
+    MESSAGE: "Failed to insert dispatched product",
+    DEVELOPER_INFO:
+      "In procedure create_dispatched_product failed to insert dispatched_product",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50017: {
+    MESSAGE: "Failed to delete reservation",
+    DEVELOPER_INFO:
+      "Failed to delete reservation after creating dispatched_product",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50018: {
+    MESSAGE: "Failed to create dispatch",
+    DEVELOPER_INFO: "Failed to create dispatch in create_dispatch procedure.",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50019: {
+    MESSAGE: "Dispatch doesn't exist",
+    DEVELOPER_INFO: "User tried to cancel dispatch that doesn't exist",
+    CODE: CODES.NOTFOUND,
+    STATUS: 404,
+  },
+  50020: {
+    MESSAGE: "Dispatch hasn't been created",
+    DEVELOPER_INFO: "Dispatch exists but doesn't have status CREATED",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50021: {
+    MESSAGE: "Dispatch has been already canceled",
+    DEVELOPER_INFO:
+      "User tried to cancel dispatch that has been already canceled",
+    CODE: CODES.REJECTED,
+    STATUS: 422,
+  },
+  50022: {
+    MESSAGE: "Failed to create status of a dispatch",
+    DEVELOPER_INFO: "Failed to create dispatch_status in cancel_dispatch",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
 };
 
 //EXPORTS
