@@ -1450,3 +1450,300 @@ Successful request
 </table>
 
 <br/><br/>
+
+<br/><br/>
+
+---
+
+## Dispatches
+
+In order to use dispatches endpoints - route `/dispatches` is used. So url will be: dystproapi.azurewebsites.net/dispatches/
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+### Get request
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/dispatches/:id</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+example: /dispatches/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+    dispatch: {
+        dispatch_id: 85,
+        pickup_planned_date: '2021-01-03T21:34:28.870Z',
+        driver: { driver_id: 1644, name: 'Jacek', surname: 'Kacek' },
+        vehicle: { vehicle_id: 1809, registration_number: 'KER 3321' },
+        states: [ [Object] ],
+        dispatched_products: [
+            {
+                "name":"Plytki wielkorzebne czarne",
+                "amount":100,
+                "price":285000
+            },
+            {
+                "name":"Plytki wielkorzebne niebieskie",
+                "amount":20,
+                "price":76000
+            }
+        ]
+    }
+}
+
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Get dispatches
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/dispatches</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+    dispatches: [
+        {
+            dispatch_id: 3,
+            state: 'CANCELED',
+            date: '2020-12-25T16:43:10.730Z',
+            pickup_planned_date: '2021-01-01T16:29:13.147Z'
+        },
+        {
+            dispatch_id: 4,
+            state: 'CANCELED',
+            date: '2020-12-25T16:44:20.810Z',
+            pickup_planned_date: '2021-01-01T16:44:20.477Z'
+        },
+        {
+            dispatch_id: 5,
+            state: 'CANCELED',
+            date: '2020-12-25T17:21:38.697Z',
+            pickup_planned_date: '2021-01-01T17:21:38.197Z'
+        },
+    ]
+}</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Add dispatch
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> POST </td>
+        <td>/dispatches</td>
+        <td>
+<pre>
+{
+    dispatch: {
+          driver_id: 10,
+          vehicle_id: 20,
+          pickup_planned_date: '2021-01-03T21:34:28.870Z'(optional),
+          reservations_ids: [30,40,41]
+        }
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+    dispatch: {
+        dispatch_id: 85,
+        pickup_planned_date: '2021-01-03T21:34:28.870Z',
+        driver: { driver_id: 1644, name: 'Jacek', surname: 'Kacek' },
+        vehicle: { vehicle_id: 1809, registration_number: 'KER 3321' },
+        states: [ [Object] ],
+        dispatched_products: [
+            {
+                "name":"Plytki wielkorzebne czarne",
+                "amount":100,
+                "price":285000
+            },
+            {
+                "name":"Plytki wielkorzebne niebieskie",
+                "amount":20,
+                "price":76000
+            }
+        ]
+    }
+}
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+### Delete dispatch
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> DELETE </td>
+        <td>/dispatches/:id</td>
+        <td>
+<pre></pre>
+        </td>
+    </tbody>
+</table>
+example: /dispatches/1
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
