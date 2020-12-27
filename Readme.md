@@ -1523,7 +1523,14 @@ Responses:
         pickup_planned_date: '2021-01-03T21:34:28.870Z',
         driver: { driver_id: 1644, name: 'Jacek', surname: 'Kacek' },
         vehicle: { vehicle_id: 1809, registration_number: 'KER 3321' },
-        states: [ [Object] ],
+                states: [
+                    {
+                        "state":"CREATED","date":"2020-12-27T21:50:14.133Z"
+                    }
+                    {
+                        "state":"CANCELED","date":"2020-12-28T21:50:10.133Z"
+                    }
+                ],
         dispatched_products: [
             {
                 "name":"Plytki wielkorzebne czarne",
@@ -1672,7 +1679,11 @@ Responses:
         pickup_planned_date: '2021-01-03T21:34:28.870Z',
         driver: { driver_id: 1644, name: 'Jacek', surname: 'Kacek' },
         vehicle: { vehicle_id: 1809, registration_number: 'KER 3321' },
-        states: [ [Object] ],
+        states: [
+            {
+                "state":"CREATED","date":"2020-12-27T21:50:14.133Z"
+            }
+        ],
         dispatched_products: [
             {
                 "name":"Plytki wielkorzebne czarne",
