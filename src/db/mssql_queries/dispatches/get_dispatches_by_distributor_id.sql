@@ -8,4 +8,4 @@ FROM dispatches_states AS states
 SELECT dispatch_id, MAX(date) AS date
     FROM dispatches_states
     GROUP BY dispatch_id) AS newest ON newest.date = states.date
-    INNER JOIN dispatches ON newest.dispatch_id = dispatches.dispatch_id
+    INNER JOIN dispatches ON newest.dispatch_id = dispatches.dispatch_id AND dispatches.distributor_id = @distributor_id
