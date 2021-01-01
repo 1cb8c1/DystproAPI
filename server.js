@@ -3,6 +3,7 @@ const express = require("express");
 const CONFIG = require("./Config");
 const helmet = require("helmet");
 const pools = require("./src/db/pools");
+const cors = require("cors");
 //ROUTES IMPORTS
 const authRoute = require("./src/routes/AuthenticationRoute");
 const productsRoute = require("./src/routes/ProductsRoute");
@@ -17,6 +18,7 @@ const errorHandler = require("./src/errors/ErrorsHandler");
 //SETTING UP APP
 const app = express();
 app.use(helmet()); //Helps securing app
+app.use(cors({ origin: CONFIG.ORIGIN }));
 app.set("trust proxy", true); //Trusting proxy provided by azure
 
 const listenHandler = app.listen(CONFIG.PORT, () => {
