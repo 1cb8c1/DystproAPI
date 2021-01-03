@@ -12,6 +12,7 @@ const reqeustsRoute = require("./src/routes/RequestsRoute");
 const vehiclesRoute = require("./src/routes/VehiclesRoute");
 const reservationsRoute = require("./src/routes/ReservationsRoute");
 const dispatchesRoute = require("./src/routes/DispatchesRoute");
+const distributorRoute = require("./src/routes/DistributorRoute");
 //ERROR HANDLER IMPORT
 const errorHandler = require("./src/errors/ErrorsHandler");
 
@@ -38,6 +39,7 @@ app.use("/requests", reqeustsRoute);
 app.use("/vehicles", vehiclesRoute);
 app.use("/reservations", reservationsRoute);
 app.use("/dispatches", dispatchesRoute);
+app.use("/distributor", distributorRoute);
 
 //USING ERROR HANDLER
 app.use(errorHandler);
