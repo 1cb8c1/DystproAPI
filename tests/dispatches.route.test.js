@@ -75,6 +75,75 @@ describe("Dispatches Post endpoint", () => {
     expect(dispatchPostResponse.status).toBe(200);
   });
 
+  it("Post should succeed - with date", async () => {
+    const app = await getApp();
+    const distributorId = 1;
+
+    const responseWithToken = await request(app).post("/auth/login").send({
+      email: "baba@piaskowa.pl",
+      password: "123abc&&ABC",
+    });
+    expect(responseWithToken.status).toBe(200);
+    expect(responseWithToken.body.auth).toBe(true);
+
+    const driver = await DBdrivers.addDriver("Jacek", "Kacek", distributorId);
+    const vehicle = await DBvehicles.addVehicle("KER 3321", distributorId);
+
+    const product = await DBproducts.getProductDetails(1);
+    const productWarehouseId1 = product.availability[0].product_warehouse_id;
+    const reservedAmount1 = 100;
+
+    const product2 = await DBproducts.getProductDetails(2);
+    const productWarehouseId2 = product2.availability[0].product_warehouse_id;
+    const reservedAmount2 = 20;
+
+    //RESERVING
+    const reservation = await DBreservations.createReservation(
+      distributorId,
+      productWarehouseId1,
+      reservedAmount1
+    );
+
+    const reservation2 = await DBreservations.createReservation(
+      distributorId,
+      productWarehouseId2,
+      reservedAmount2
+    );
+
+    const reservations = [
+      reservation.reservation_id,
+      reservation2.reservation_id,
+    ];
+
+    //CREATING DISPATCH
+    const date = "2050-01-03T13:46:33.347Z";
+    const dispatchPostResponse = await request(app)
+      .post("/dispatches")
+      .set("x-access-token", responseWithToken.body.token)
+      .send({
+        dispatch: {
+          driver_id: driver.driver_id,
+          vehicle_id: vehicle.vehicle_id,
+          reservations_ids: reservations,
+          pickup_planned_date: date,
+        },
+      });
+
+    //CANCELING DISPATCh
+    await DBdispatches.cancelDispatch(
+      distributorId,
+      dispatchPostResponse.body.dispatch.dispatch_id
+    );
+
+    //CLEANING
+    await DBdrivers.removeDriver(driver.driver_id, distributorId);
+    await DBvehicles.removeVehicle(vehicle.vehicle_id, distributorId);
+
+    //EXPECTS
+    expect(dispatchPostResponse.status).toBe(200);
+    expect(dispatchPostResponse.body.dispatch.pickup_planned_date).toBe(date);
+  });
+
   it("Post should Fail, non-existant driver", async () => {
     const app = await getApp();
     const distributorId = 1;
