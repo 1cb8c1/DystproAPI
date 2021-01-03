@@ -28,7 +28,7 @@ const createDispatch = async (
   requestCreateDispatch.input("vehicle_id", sql.Int, vehicleId);
   requestCreateDispatch.input(
     "pickup_planned_date",
-    sql.Date,
+    sql.DateTime,
     pickupPlannedDate
   );
   requestCreateDispatch.output("dispatch_id", sql.Int);
