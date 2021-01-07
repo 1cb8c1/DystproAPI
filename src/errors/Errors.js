@@ -166,6 +166,45 @@ const DATABASE_ERRORS = {
     CODE: CODES.LOGIC,
     STATUS: 500,
   },
+  50023: {
+    MESSAGE: "Warehouse with such name already exists",
+    DEVELOPER_INFO:
+      "User tried to create warehouse with not unique name. Procedure create_warehouse",
+    CODE: CODES.REJECTED,
+    STATUS: 422,
+  },
+  50024: {
+    MESSAGE: "Failed to create warehouse",
+    DEVELOPER_INFO: "Failed to create warehouse in procedure create_warehouse",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50025: {
+    MESSAGE: "Warehouse doesn't exist or is already archived",
+    DEVELOPER_INFO:
+      "User tried to delete warehouse that doesn't exist or is already archived, procedure delete_warehouse",
+    CODE: CODES.NOTFOUND,
+    STATUS: 404,
+  },
+  50026: {
+    MESSAGE: "Failed to delete warehouse",
+    DEVELOPER_INFO: "Failed to delete warehouse, procedure delete_warehouse",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
+  50027: {
+    MESSAGE: "Warehouse doesn't exist or is not archived",
+    DEVELOPER_INFO:
+      "User tried to reopen warehouse that doesn't exist or is not archived, procedure reopen_warehouse",
+    CODE: CODES.NOTFOUND,
+    STATUS: 404,
+  },
+  50028: {
+    MESSAGE: "Failed to reopen warehouse",
+    DEVELOPER_INFO: "Failed to reopen warehouse, procedure reopen_warehouse",
+    CODE: CODES.LOGIC,
+    STATUS: 500,
+  },
 };
 
 //EXPORTS
