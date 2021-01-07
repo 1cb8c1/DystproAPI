@@ -1,0 +1,6 @@
+CREATE FUNCTION get_all_warehouses()
+RETURNS TABLE
+AS
+RETURN
+SELECT *
+FROM warehouses
