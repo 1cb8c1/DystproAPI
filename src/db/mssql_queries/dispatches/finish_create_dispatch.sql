@@ -19,6 +19,18 @@ BEGIN
     WHERE dispatch_id = @dispatch_id) > 0)
         THROW 50024, 'State for this dispatch already exists', 1
 
+    /*CHECK IF ALL dispatched_products ARE FROM THE SAME warehouse*/
+    DECLARE @amount_of_warehouses INT
+
+    SELECT @amount_of_warehouses = COUNT(DISTINCT products_warehouses.warehouse_name)
+    FROM products_warehouses
+        INNER JOIN (SELECT *
+        FROM dispatched_products
+        WHERE dispatch_id = @dispatch_id) AS dispatched ON dispatched.product_warehouse_id = products_warehouses.product_warehouse_id
+
+    IF(@amount_of_warehouses != 1)
+        THROW 50050, 'Reservations dont have the same warehouse', 1
+
     /*CREATE dispatch_state*/
     DECLARE @my_table2 TABLE(dispatch_id INT)
     INSERT dispatches_states

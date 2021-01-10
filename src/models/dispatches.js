@@ -117,6 +117,7 @@ const getDispatch = async (distributorId, dispatchId) => {
       vehicle_id: dispatch.vehicle_id,
       registration_number: dispatch.registration_number,
     },
+    warehouse_name: dispatch.warehouse_name,
     states: states,
     dispatched_products: dispatchedProducts,
   };

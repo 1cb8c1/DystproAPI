@@ -19,6 +19,12 @@ BEGIN
     WHERE dispatch_id = @dispatch_id AND state = 'CREATED') != 1)
         THROW 50020, 'Dispatch doesnt have status CREATED', 1
 
+    /*CHECK IF dispatch_state ISNT REALIZED FOR THIS dispatch*/
+    IF((SELECT COUNT(state)
+    FROM dispatches_states WITH (XLOCK, ROWLOCK)
+    WHERE dispatch_id = @dispatch_id AND state = 'REALIZED') != 0)
+        THROW 50050, 'Dispatch already has been REALIZED', 1
+
     /*CHECK IF dispatch_state CANCELED FOR THIS dispatch DOESNT ALREADY EXIST*/
     IF((SELECT COUNT(state)
     FROM dispatches_states
