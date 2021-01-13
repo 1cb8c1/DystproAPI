@@ -22,7 +22,8 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mssql": "^6.2.3",
-    "nodemailer": "^6.4.16"
+    "nodemailer": "^6.4.16",
+    "xml": "^1.0.1"
   },
   "devDependencies": {
     "eslint": "^7.15.0",
