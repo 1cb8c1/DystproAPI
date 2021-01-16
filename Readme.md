@@ -265,6 +265,9 @@ Successful login
 </table>
 
 <br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
 ### Authentication
 
@@ -388,6 +391,10 @@ User doesn't have permissions to access this resourse.
 </table>
 
 <br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
 ### Roles
 
@@ -462,6 +469,17 @@ Successful request
 </tbody>
 </table>
 
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 <br/><br/>
 
 ---
@@ -782,6 +800,8 @@ Successful request
 </table>
 
 <br/><br/>
+<br/><br/>
+<br/><br/>
 
 ### Remove driver
 
@@ -895,6 +915,8 @@ Successful request
 
 <br/><br/>
 
+<br/><br/>
+<br/><br/>
 <br/><br/>
 
 ---
@@ -1094,6 +1116,16 @@ Successful request
 
 <br/><br/>
 <br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
 ---
 
@@ -1118,6 +1150,8 @@ In order to use requests endpoints - route `/requests` is used. So url will be: 
     </tbody>
 </table>
 
+<br/><br/>
+<br/><br/>
 <br/><br/>
 
 ### Add request
@@ -1177,6 +1211,11 @@ Successful request
 <br/><br/>
 
 <br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
 ---
 
@@ -1201,6 +1240,8 @@ In order to use reservations endpoints - route `/reservations` is used. So url w
     </tbody>
 </table>
 
+<br/><br/>
+<br/><br/>
 <br/><br/>
 
 ### Get request
@@ -1452,6 +1493,9 @@ Successful request
 <br/><br/>
 
 <br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
 
 ---
 
@@ -1556,6 +1600,12 @@ Successful request
 </table>
 
 <br/><br/>
+<br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/>
 
 ### Get dispatches
 
@@ -1625,6 +1675,12 @@ Successful request
 </tbody>
 </table>
 
+<br/><br/>
+<br/><br/>
+<br/><br/><br/><br/>
+<br/><br/><br/><br/>
+<br/><br/>
+<br/><br/>
 <br/><br/>
 
 ### Add dispatch
@@ -1756,5 +1812,162 @@ Successful request
 </tr>
 </tbody>
 </table>
+
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+
+---
+
+## Distributors
+
+In order to use distributors endpoints - route `/distributors` is used. So url will be: dystproapi.azurewebsites.net/distributors/
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Headers </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td>
+            <pre>
+{ 
+    "x-access-token": token 
+}</pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+### Get request for discount
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/distributors/discount</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre>
+{
+    disocunt: 5
+        
+}
+
+</pre>
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
+
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+
+---
+
+## Info
+
+In order to use info endpoints - route `/info` is used. So url will be: dystproapi.azurewebsites.net/info/
+
+### Get request for info
+
+<br/>
+<table>
+    <thead>
+        <tr>
+            <th> Method </th>
+            <th> Route </th>
+            <th> Body </th>
+        </tr>
+    </thead>
+    <tbody>
+        <td> GET </td>
+        <td>/info</td>
+        <td>
+            <pre></pre>
+        </td>
+    </tbody>
+</table>
+
+<br/><br/>
+
+Responses:
+
+<table>
+<thead>
+<tr>
+<th> HTTP Code </th>
+<th> Body Example</th>
+<th> Description </th>
+</tr>
+</thead>
+<tbody>
+</tr>
+<tr>
+<td>200</td>
+<td>
+<pre><code>
+&lt;info&gt;
+&lt;authors&gt;
+&lt;author&gt;BMotyl&lt;/author&gt;
+&lt;author&gt;MMichalec&lt;/author&gt;
+&lt;/authors&gt;
+&lt;version&gt;1.0&lt;/version&gt;
+&lt;/info&gt;
+</code></pre>
+
+</td>
+<td>
+Successful request
+</td>
+</tr>
+</tbody>
+</table>
+
+<br/><br/>
 
 <br/><br/>
